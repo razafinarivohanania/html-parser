@@ -9,7 +9,7 @@
 
 int main()
 {
-    std::string rawAttributes = " class = 'first' ";
+    std::string rawAttributes = "class='cool' id=\"first\" disable";
     AttributeParser attributeParser(rawAttributes);
     std::vector<Attribute *> attributes = attributeParser.getAttributes();
     for (std::string::size_type i = 0; i < attributes.size(); i++)

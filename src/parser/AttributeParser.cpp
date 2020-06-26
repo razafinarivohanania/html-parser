@@ -1,20 +1,19 @@
 #include "AttributeParser.h"
 
-AttributeParser::AttributeParser(std::string &rawAttributes) : m_name(""),
-                                                               m_value(""),
-                                                               m_character(' '),
+AttributeParser::AttributeParser(std::string &rawAttributes) : m_character(' '),
                                                                m_quot('"'),
+                                                               m_name(""),
+                                                               m_value(""),
                                                                m_invalidCharacters("²&~\"#'{([|`\\^)°]+=}/*^¨$£¤%<>?,;.:!§ ")
 {
-    m_attributes = parse(rawAttributes);
+    parse(rawAttributes);
 }
 
-std::vector<Attribute *> AttributeParser::parse(std::string &rawAttributes)
+void AttributeParser::parse(std::string &rawAttributes)
 {
-    std::vector<Attribute *> attributes;
     if (rawAttributes == "")
     {
-        return attributes;
+        return;
     }
 
     ActionParser action = ActionParser::SEARCH_ATTRIBUTE_NAME;
@@ -28,6 +27,9 @@ std::vector<Attribute *> AttributeParser::parse(std::string &rawAttributes)
         case ActionParser::SEARCH_ATTRIBUTE_NAME:
             action = searchName();
             continue;
+        case ActionParser::SEARCH_EQUALS:
+            action = searchEquals();
+            continue;
         case ActionParser::SEARCH_ATTRIBUTE_QUOT:
             action = searchQuot();
             continue;
@@ -35,26 +37,29 @@ std::vector<Attribute *> AttributeParser::parse(std::string &rawAttributes)
             action = searchValue();
             continue;
         case ActionParser::SAVE_ATTRIBUTE_WITH_NO_VALUE:
-            action = saveAttribute(attributes, true);
+            action = saveAttribute(true);
             continue;
         case ActionParser::SAVE_ATTRIBUTE_WITH_VALUE:
-            action = saveAttribute(attributes, false);
+            action = saveAttribute(false);
         }
     }
 
-    if (m_name != "") {
-        if (action == SEARCH_ATTRIBUTE_VALUE) {
-            saveAttribute(attributes, false);
-        } else {
-            saveAttribute(attributes, true);
+    if (m_name != "")
+    {
+        if (action == SAVE_ATTRIBUTE_WITH_VALUE)
+        {
+            saveAttribute(false);
+        }
+        else
+        {
+            saveAttribute(true);
         }
     }
-    
-    return attributes;
 }
 
 ActionParser AttributeParser::searchName()
 {
+    std::cout << "SEARCH_NAME : [" << m_name << "] [" << m_value << "] [" << m_character << "]" << std::endl;
     if (isSpaceCharacter())
     {
         if (m_name == "")
@@ -62,14 +67,14 @@ ActionParser AttributeParser::searchName()
             return ActionParser::SEARCH_ATTRIBUTE_NAME;
         }
 
-        return ActionParser::SAVE_ATTRIBUTE_WITH_NO_VALUE;
+        return ActionParser::SEARCH_EQUALS;
     }
 
     if (m_character == '=')
     {
         if (isValidName())
         {
-            return searchQuot();
+            return ActionParser::SEARCH_ATTRIBUTE_QUOT;
         }
 
         reinitializeAttribute();
@@ -80,8 +85,33 @@ ActionParser AttributeParser::searchName()
     return SEARCH_ATTRIBUTE_NAME;
 }
 
+ActionParser AttributeParser::searchEquals()
+{
+    std::cout << "SEARCH_EQUALS : [" << m_name << "] [" << m_value << "] [" << m_character << "]" << std::endl;
+    if (isSpaceCharacter())
+    {
+        return ActionParser::SEARCH_EQUALS;
+    }
+
+    if (m_character == '=')
+    {
+        if (isValidName())
+        {
+            return ActionParser::SEARCH_ATTRIBUTE_QUOT;
+        }
+
+        reinitializeAttribute();
+        return ActionParser::SEARCH_ATTRIBUTE_NAME;
+    }
+
+    saveAttribute(true);
+    m_name = m_character;
+    return SEARCH_ATTRIBUTE_NAME;
+}
+
 ActionParser AttributeParser::searchQuot()
 {
+    std::cout << "SEARCH_QUOT : [" << m_name << "] [" << m_value << "] [" << m_character << "]" << std::endl;
     if (isSpaceCharacter())
     {
         return ActionParser::SEARCH_ATTRIBUTE_QUOT;
@@ -100,7 +130,9 @@ ActionParser AttributeParser::searchQuot()
 
 ActionParser AttributeParser::searchValue()
 {
-    if (m_quot == m_character) {
+    std::cout << "SEARCH_VALUE : [" << m_name << "] [" << m_value << "] [" << m_character << "]" << std::endl;
+    if (m_quot == m_character)
+    {
         return ActionParser::SAVE_ATTRIBUTE_WITH_VALUE;
     }
 
@@ -108,8 +140,9 @@ ActionParser AttributeParser::searchValue()
     return ActionParser::SEARCH_ATTRIBUTE_VALUE;
 }
 
-ActionParser AttributeParser::saveAttribute(std::vector<Attribute *> &attributes, bool noValue)
+ActionParser AttributeParser::saveAttribute(bool noValue)
 {
+    std::cout << "SAVE_ATTRIBUTE : [" << m_name << "] [" << m_value << "] [" << m_character << "] [" << noValue << "]" << std::endl;
     Attribute *attribute = new Attribute();
 
     attribute->setName(m_name);
@@ -122,7 +155,7 @@ ActionParser AttributeParser::saveAttribute(std::vector<Attribute *> &attributes
         attribute->setValue(m_value);
     }
 
-    attributes.push_back(attribute);
+    m_attributes.push_back(attribute);
     reinitializeAttribute();
     return ActionParser::SEARCH_ATTRIBUTE_NAME;
 }

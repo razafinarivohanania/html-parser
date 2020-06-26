@@ -19,23 +19,25 @@ public:
     std::vector<Attribute *> getAttributes();
 
 private:
-    std::vector<Attribute *> m_attributes;
-    std::vector<Attribute *> parse(std::string &rawAttributes);
-    bool isValidName();
-    bool isQuotCharacter();
-    bool isSpaceCharacter();
+    char m_character;
+    char m_quot;
 
     std::string m_name;
     std::string m_value;
     std::string m_invalidCharacters;
-    char m_character;
-    char m_quot;
+
+    std::vector<Attribute *> m_attributes;
+    void parse(std::string &rawAttributes);
+    bool isValidName();
+    bool isQuotCharacter();
+    bool isSpaceCharacter();
 
     ActionParser searchName();
+    ActionParser searchEquals();
     ActionParser searchQuot();
     ActionParser searchValue();
     void reinitializeAttribute();
-    ActionParser saveAttribute(std::vector<Attribute *> &attributes, bool noValue);
+    ActionParser saveAttribute(bool noValue);
 };
 
 #endif
