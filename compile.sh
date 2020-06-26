@@ -12,6 +12,9 @@ src/node/Comment.h \
 src/node/NodeType.h \
 src/node/Text.cpp \
 src/node/Text.h \
+src/parser/ActionParser.h \
 src/parser/AttributeParser.cpp \
 src/parser/AttributeParser.h \
 -o html-parser
+
+./html-parser

@@ -1,6 +1,10 @@
 #include "AttributeParser.h"
 
-AttributeParser::AttributeParser(std::string &rawAttributes)
+AttributeParser::AttributeParser(std::string &rawAttributes) : m_name(""),
+                                                               m_value(""),
+                                                               m_character(' '),
+                                                               m_quot('"'),
+                                                               m_invalidCharacters("²&~\"#'{([|`\\^)°]+=}/*^¨$£¤%<>?,;.:!§ ")
 {
     m_attributes = parse(rawAttributes);
 }
@@ -13,67 +17,120 @@ std::vector<Attribute *> AttributeParser::parse(std::string &rawAttributes)
         return attributes;
     }
 
-    int action = SEARCH_NAME;
-    std::string name = "";
-    std::string value = "";
-    char quot = '"';
+    ActionParser action = ActionParser::SEARCH_ATTRIBUTE_NAME;
 
     for (auto &character : rawAttributes)
     {
+        m_character = character;
+
         switch (action)
         {
-        case SEARCH_VALUE:
-            if (character == quot)
-            {
-                Attribute *attribute = new Attribute();
-                attributes.push_back(attribute->setName(name)->setValue(value));
-                name = "";
-                value = "";
-                action = SEARCH_NAME;
-                continue;
-            }
-
-            value += character;
+        case ActionParser::SEARCH_ATTRIBUTE_NAME:
+            action = searchName();
             continue;
-        case SEARCH_QUOT:
-            if (character == '"' || character == '\'')
-            {
-                quot = character;
-                action = SEARCH_VALUE;
-                continue;
-            }
-
-            name = "";
-            value = "";
-            action = SEARCH_NAME;
+        case ActionParser::SEARCH_ATTRIBUTE_QUOT:
+            action = searchQuot();
             continue;
-        case SEARCH_NAME:
-            if (character == '=')
-            {
-                if (isValidName(name))
-                {
-                    action = SEARCH_QUOT;
-                    continue;
-                }
-
-                name = "";
-                value = "";
-                action = SEARCH_NAME;
-                continue;
-            }
-
-            if (character == ' ' || character == '\n' || character == '\r')
-            {
-                continue;
-            }
-
-            name += character;
-            std::cout << name << std::endl;
+        case ActionParser::SEARCH_ATTRIBUTE_VALUE:
+            action = searchValue();
             continue;
+        case ActionParser::SAVE_ATTRIBUTE_WITH_NO_VALUE:
+            action = saveAttribute(attributes, true);
+            continue;
+        case ActionParser::SAVE_ATTRIBUTE_WITH_VALUE:
+            action = saveAttribute(attributes, false);
         }
     }
 
+    if (m_name != "") {
+        if (action == SEARCH_ATTRIBUTE_VALUE) {
+            saveAttribute(attributes, false);
+        } else {
+            saveAttribute(attributes, true);
+        }
+    }
+    
     return attributes;
+}
+
+ActionParser AttributeParser::searchName()
+{
+    if (isSpaceCharacter())
+    {
+        if (m_name == "")
+        {
+            return ActionParser::SEARCH_ATTRIBUTE_NAME;
+        }
+
+        return ActionParser::SAVE_ATTRIBUTE_WITH_NO_VALUE;
+    }
+
+    if (m_character == '=')
+    {
+        if (isValidName())
+        {
+            return searchQuot();
+        }
+
+        reinitializeAttribute();
+        return ActionParser::SEARCH_ATTRIBUTE_NAME;
+    }
+
+    m_name += m_character;
+    return SEARCH_ATTRIBUTE_NAME;
+}
+
+ActionParser AttributeParser::searchQuot()
+{
+    if (isSpaceCharacter())
+    {
+        return ActionParser::SEARCH_ATTRIBUTE_QUOT;
+    }
+
+    if (isQuotCharacter())
+    {
+        m_quot = m_character;
+        return ActionParser::SEARCH_ATTRIBUTE_VALUE;
+    }
+
+    reinitializeAttribute();
+    m_name += m_character;
+    return ActionParser::SEARCH_ATTRIBUTE_NAME;
+}
+
+ActionParser AttributeParser::searchValue()
+{
+    if (m_quot == m_character) {
+        return ActionParser::SAVE_ATTRIBUTE_WITH_VALUE;
+    }
+
+    m_value += m_character;
+    return ActionParser::SEARCH_ATTRIBUTE_VALUE;
+}
+
+ActionParser AttributeParser::saveAttribute(std::vector<Attribute *> &attributes, bool noValue)
+{
+    Attribute *attribute = new Attribute();
+
+    attribute->setName(m_name);
+    if (noValue)
+    {
+        attribute->setNoValue(true);
+    }
+    else
+    {
+        attribute->setValue(m_value);
+    }
+
+    attributes.push_back(attribute);
+    reinitializeAttribute();
+    return ActionParser::SEARCH_ATTRIBUTE_NAME;
+}
+
+void AttributeParser::reinitializeAttribute()
+{
+    m_name = "";
+    m_value = "";
 }
 
 std::vector<Attribute *> AttributeParser::getAttributes()
@@ -81,26 +138,29 @@ std::vector<Attribute *> AttributeParser::getAttributes()
     return m_attributes;
 }
 
-bool AttributeParser::isSpace(char &character)
+bool AttributeParser::isQuotCharacter()
 {
-    return character == ' ' ||
-           character == '\n' ||
-           character == '\t' ||
-           character == '\r';
+    return m_character == '"' || m_character == '\'';
 }
 
-bool AttributeParser::isValidName(std::string &name)
+bool AttributeParser::isSpaceCharacter()
 {
-    if (name == "")
+    return m_character == ' ' ||
+           m_character == '\n' ||
+           m_character == '\t' ||
+           m_character == '\r';
+}
+
+bool AttributeParser::isValidName()
+{
+    if (m_name == "")
     {
         return false;
     }
 
-    std::string invalidCharacters = "²&~\"#'{([|`\\^)°]+=}/*^¨$£¤%<>?,;.:!§ ";
-
-    for (auto &character : name)
+    for (auto &character : m_name)
     {
-        for (auto &invalidCharacter : invalidCharacters)
+        for (auto &invalidCharacter : m_invalidCharacters)
         {
             if (character == invalidCharacter)
             {

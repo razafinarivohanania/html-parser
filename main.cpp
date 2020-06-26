@@ -9,7 +9,7 @@
 
 int main()
 {
-    std::string rawAttributes = "        class  =  'first'          disable data-href   =   'https://www.google.com'   href='https://www.google.com'";
+    std::string rawAttributes = " class = 'first' ";
     AttributeParser attributeParser(rawAttributes);
     std::vector<Attribute *> attributes = attributeParser.getAttributes();
     for (std::string::size_type i = 0; i < attributes.size(); i++)

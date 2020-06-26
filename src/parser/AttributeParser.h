@@ -5,6 +5,12 @@
 #include <vector>
 #include <iostream>
 #include "./../node/tag/Attribute.h"
+#include "ActionParser.h"
+
+enum Action
+{
+    SEARCH_NAME
+};
 
 class AttributeParser
 {
@@ -13,16 +19,23 @@ public:
     std::vector<Attribute *> getAttributes();
 
 private:
-    static int const SEARCH_NAME = 0;
-    static int const VALIDATE_NAME = 1;
-    static int const SEARCH_VALUE = 2;
-    static int const SEARCH_EQUALS = 3;
-    static int const SEARCH_QUOT = 4;
-
     std::vector<Attribute *> m_attributes;
     std::vector<Attribute *> parse(std::string &rawAttributes);
-    bool isValidName(std::string &name);
-    bool isSpace(char &character);
+    bool isValidName();
+    bool isQuotCharacter();
+    bool isSpaceCharacter();
+
+    std::string m_name;
+    std::string m_value;
+    std::string m_invalidCharacters;
+    char m_character;
+    char m_quot;
+
+    ActionParser searchName();
+    ActionParser searchQuot();
+    ActionParser searchValue();
+    void reinitializeAttribute();
+    ActionParser saveAttribute(std::vector<Attribute *> &attributes, bool noValue);
 };
 
 #endif
