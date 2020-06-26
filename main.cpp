@@ -5,8 +5,20 @@
 #include "src/node/Text.h"
 #include "src/node/tag/Attribute.h"
 #include "src/node/Comment.h"
+#include "src/parser/AttributeParser.h"
 
 int main()
 {
-    return 0;
+    std::string rawAttributes = "        class  =  'first'          disable data-href   =   'https://www.google.com'   href='https://www.google.com'";
+    AttributeParser attributeParser(rawAttributes);
+    std::vector<Attribute *> attributes = attributeParser.getAttributes();
+    for (std::string::size_type i = 0; i < attributes.size(); i++)
+    {
+        if (attributes[i] != nullptr)
+        {
+            std::cout << attributes[i]->toString() << std::endl;
+            delete attributes[i];
+            attributes[i] = nullptr;
+        }
+    }
 }

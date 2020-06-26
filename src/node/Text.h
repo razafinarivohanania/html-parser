@@ -12,6 +12,7 @@ public:
     std::string getText();
 
     virtual std::string toHtml();
+    virtual ~Text();
 private:
     std::string m_text;
 };

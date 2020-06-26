@@ -12,6 +12,7 @@ public:
     std::string getComment();
 
     virtual std::string toHtml();
+    ~Comment();
 
 private:
     std::string m_comment;

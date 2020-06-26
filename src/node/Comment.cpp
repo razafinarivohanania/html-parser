@@ -19,3 +19,7 @@ std::string Comment::toHtml()
 {
     return "<!--" + m_comment + "-->";
 }
+
+Comment::~Comment()
+{
+}

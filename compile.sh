@@ -1,4 +1,5 @@
 g++ -std=c++11 \
+-Wall \
 main.cpp \
 src/node/Node.cpp \
 src/node/Node.h \
@@ -11,4 +12,6 @@ src/node/Comment.h \
 src/node/NodeType.h \
 src/node/Text.cpp \
 src/node/Text.h \
+src/parser/AttributeParser.cpp \
+src/parser/AttributeParser.h \
 -o html-parser

@@ -79,9 +79,9 @@ std::string Tag::toHtml()
 std::string Tag::attributesToHtml()
 {
     std::string attributesHtml = "";
-    auto size = m_attributes.size();
+    std::string::size_type size = m_attributes.size();
 
-    for (auto i = 0; i < size; i++)
+    for (std::string::size_type i = 0; i < size; i++)
     {
         std::string attributeHtml = m_attributes[i]->toHtml();
         if (attributeHtml != "")
@@ -111,7 +111,7 @@ std::string Tag::nodesToHtml()
 
 Tag::~Tag()
 {
-    for (int i = 0; i < m_attributes.size(); i++)
+    for (std::string::size_type i = 0; i < m_attributes.size(); i++)
     {
         if (m_attributes[i] != nullptr)
         {
@@ -120,7 +120,7 @@ Tag::~Tag()
         }
     }
 
-    for (int i = 0; i < m_nodes.size(); i++)
+    for (std::string::size_type i = 0; i < m_nodes.size(); i++)
     {
         if (m_nodes[i] != nullptr)
         {

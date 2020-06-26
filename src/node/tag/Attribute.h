@@ -1,6 +1,7 @@
 #ifndef NODE_ATTRIBUTE_H
 #define NODE_ATTRIBUTE_H
 
+#include <iostream>
 #include <vector>
 #include <string>
 
@@ -16,21 +17,12 @@ public:
     std::string getValue();
 
     std::string toHtml();
-
-    static std::vector<Attribute *> parse(std::string rawAttributes);
+    std::string toString();
 
 private:
     std::string m_name;
     std::string m_value;
     bool m_noValue;
-
-    static int const SEARCH_NAME = 0;
-    static int const VALIDATE_NAME = 1;
-    static int const SEARCH_VALUE = 2;
-    static int const SEARCH_EQUALS = 3;
-    static int const SEARCH_QUOT = 4;
-
-    static bool isValidName(std::string &name);
 };
 
 #endif

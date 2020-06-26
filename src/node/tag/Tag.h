@@ -21,7 +21,7 @@ public:
     std::vector<Node *> getNodes();
 
     virtual std::string toHtml();
-    ~Tag();
+    virtual ~Tag();
 
 private:
     std::string m_name;

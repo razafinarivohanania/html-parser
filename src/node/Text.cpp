@@ -19,3 +19,7 @@ std::string Text::toHtml()
 {
     return m_text;
 }
+
+Text::~Text()
+{
+}
