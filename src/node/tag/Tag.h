@@ -14,6 +14,7 @@ public:
     Tag *setName(std::string name);
     Tag *setIsOrphan(bool isOrphan);
     Tag *addAttribute(Attribute *attribute);
+    Tag *addAttributes(std::vector<Attribute *> attributes);
     Tag *addNode(Node *node);
 
     std::vector<Attribute *> getAttributes();

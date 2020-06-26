@@ -24,6 +24,16 @@ Tag *Tag::addAttribute(Attribute *attribute)
     return this;
 }
 
+Tag *Tag::addAttributes(std::vector<Attribute *> attributes)
+{
+    for (auto &attribute : attributes)
+    {
+        m_attributes.push_back(attribute);
+    }
+
+    return this;
+}
+
 Tag *Tag::addNode(Node *node)
 {
     m_nodes.push_back(node);
