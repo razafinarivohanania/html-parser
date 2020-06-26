@@ -11,6 +11,7 @@ public:
     NodeType getNodeType();
 
     virtual std::string toHtml() = 0;
+    virtual ~Node();
 private:
     NodeType m_nodeType;
 };

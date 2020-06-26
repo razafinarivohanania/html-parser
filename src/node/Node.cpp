@@ -8,3 +8,7 @@ NodeType Node::getNodeType()
 {
     return m_nodeType;
 }
+
+Node::~Node()
+{
+}
