@@ -1,20 +1,16 @@
+rm ./html-parser
+
 g++ -std=c++11 \
 -Wall \
 main.cpp \
-src/node/Node.cpp \
-src/node/Node.h \
-src/node/tag/Attribute.cpp \
-src/node/tag/Attribute.h \
-src/node/tag/Tag.cpp \
-src/node/tag/Tag.h \
-src/node/Comment.cpp \
-src/node/Comment.h \
-src/node/NodeType.h \
-src/node/Text.cpp \
-src/node/Text.h \
-src/parser/ActionParser.h \
-src/parser/AttributeParser.cpp \
-src/parser/AttributeParser.h \
+src/lexer/HtmlLexer.cpp \
+src/lexer/HtmlLexer.h \
+src/lexer/HtmlToken.cpp \
+src/lexer/HtmlToken.h \
+src/utils/StringUtils.cpp \
+src/utils/StringUtils.h \
+src/utils/FileReader.cpp \
+src/utils/FileReader.h \
 -o html-parser
 
 ./html-parser
