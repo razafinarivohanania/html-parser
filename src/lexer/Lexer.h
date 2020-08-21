@@ -12,19 +12,28 @@ class Lexer
 public:
     Lexer(const std::string &html);
     virtual std::vector<HtmlToken *> getTokens() = 0;
+    bool hasError();
+    std::string getError();
 
 protected:
-    void jumSpacesFamily();
+    void skipSpacesFamily();
     bool advance();
     char getCurrentCharacter();
-    std::string getStringPosition();
+    std::string getPositionAsString();
 
     bool isLeftArrowCharacter();
     bool isRightArrowCharacter();
     bool isExclamationPointCharacter();
     bool isEqualsCharacter();
+    bool isSlashCharacter();
+    bool isSpaceCharacterFamily();
 
     void setCurrentIndex(int currentIndex);
+    void setError(std::string error);
+    std::string buildUnexpectedCharacterError(char expectedCharacter);
+    std::string buildUnexpectedCharacterError();
+
+    std::string HTML_NOT_ENDED_CORRECTLY = "HTML not ended correctly";
 
 private:
     int currentLine;
@@ -33,6 +42,7 @@ private:
     int htmlSize;
 
     std::string html;
+    std::string error;
 };
 
 #endif

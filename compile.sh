@@ -7,6 +7,10 @@ src/lexer/HtmlLexer.cpp \
 src/lexer/HtmlLexer.h \
 src/lexer/HtmlToken.cpp \
 src/lexer/HtmlToken.h \
+src/lexer/Lexer.cpp \
+src/lexer/Lexer.h \
+src/lexer/TagLexer.cpp \
+src/lexer/TagLexer.h \
 src/utils/StringUtils.cpp \
 src/utils/StringUtils.h \
 src/utils/FileReader.cpp \

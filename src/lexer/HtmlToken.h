@@ -7,7 +7,9 @@ enum TokenType
 {
     DOCTYPE,
     COMMENT,
-    TAG,
+    BEGIN_TAG,
+    ORPHAN_TAG,
+    END_TAG,
     ATTRIBUTE_NAME,
     ATTRIBUTE_VALUE,
     TEXT
