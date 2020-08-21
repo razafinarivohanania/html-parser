@@ -28,16 +28,16 @@ std::string HtmlToken::typeToString()
     {
     case DOCTYPE:
         return "DOCTYPE";
-    case TAG_NAME:
-        return "TAG_NAME";
+    case TAG:
+        return "TAG";
     case ATTRIBUTE_NAME:
         return "ATTRIBUTE_NAME";
     case ATTRIBUTE_VALUE:
         return "ATTRIBUTE_VALUE";
-    case TAG_CONTENT:
-        return "TAG_CONTENT";
-    case TAG_COMMENT:
-        return "TAG_COMMENT";
+    case TEXT:
+        return "TEXT";
+    case COMMENT:
+        return "COMMENT";
     default:
         return "[unknown]";
     }

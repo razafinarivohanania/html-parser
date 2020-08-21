@@ -28,6 +28,19 @@ namespace StringUtils
         return true;
     }
 
+    bool containsCharacter(const std::string &string, const char character)
+    {
+        int size = string.size();
+        for (int i = 0; i < size; i++)
+        {
+            if  (string[i] == character) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     bool isSpaceFamily(const char character)
     {
         return character == ' ' ||

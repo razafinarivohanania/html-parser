@@ -6,11 +6,11 @@
 enum TokenType
 {
     DOCTYPE,
-    TAG_COMMENT,
-    TAG_NAME,
+    COMMENT,
+    TAG,
     ATTRIBUTE_NAME,
     ATTRIBUTE_VALUE,
-    TAG_CONTENT
+    TEXT
 };
 
 class HtmlToken

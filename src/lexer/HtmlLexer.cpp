@@ -30,7 +30,7 @@ void HtmlLexer::process()
 
     if (!advance())
     {
-        error = "HTML not ended correctly";
+        error = HTML_NOT_ENDED_CORRECTLY_ERROR;
         return;
     }
 
@@ -38,12 +38,19 @@ void HtmlLexer::process()
     {
         if (!advance())
         {
-            error = "HTML not ended correctly";
+            error = HTML_NOT_ENDED_CORRECTLY_ERROR;
             return;
         }
 
         getDoctype();
+        if (hasError())
+        {
+            return;
+        }
+
+        getTag();
     }
+    //TODO
 }
 
 bool HtmlLexer::hasError()
@@ -208,6 +215,37 @@ void HtmlLexer::buildUnexpectedCharacterError()
     error += std::to_string(currentLine + 1);
     error += "] and column [";
     error += std::to_string(currentColumn + 1) + "].";
+}
+
+/**
+ * Attempt to retrieve tag name, attribute name, attribute value, content
+ *
+ * eg : a src="http://site.com">Site</a>
+ *
+ * There is no "<" anymore from start.
+ * Indeed, it was already consumed from decising if next is tag or not.
+ **/
+void HtmlLexer::getTag()
+{
+    char currentCharacter = getCurrentCharacter();
+    if (StringUtils::containsCharacter(INVALID_BEGIN_CHARACTER_TAG, currentCharacter))
+    {
+        buildUnexpectedCharacterError();
+        return;
+    }
+
+    /**
+     * Here tag is orphan.
+     * We just skip "/" character
+     **/
+    if (currentCharacter == '/') {
+        if (!advance()) {
+            error = HTML_NOT_ENDED_CORRECTLY_ERROR;
+            return;
+        }
+    }
+
+
 }
 
 HtmlLexer::~HtmlLexer()
