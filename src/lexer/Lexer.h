@@ -11,6 +11,7 @@
 class Lexer
 {
 public:
+    Lexer(HtmlCursor &htmlCursor);
     virtual std::vector<HtmlToken *> getTokens() = 0;
     bool hasError();
     std::string getError();
@@ -20,11 +21,12 @@ protected:
 
     void setError(std::string error);
 
+    HtmlCursor htmlCursor;
+
     std::string buildUnexpectedCharacterError(char expectedCharacter);
     std::string buildUnexpectedCharacterError();
 
 private:
-    HtmlCursor htmlCursor;
     std::string error;
 };
 

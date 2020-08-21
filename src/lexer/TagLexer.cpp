@@ -1,5 +1,9 @@
 #include "TagLexer.h"
 
+TagLexer::TagLexer(HtmlCursor &htmlCursor) : Lexer(htmlCursor)
+{
+}
+
 void TagLexer::process()
 {
     if (!htmlCursor.isLeftArrowCharacter())
@@ -41,7 +45,8 @@ void TagLexer::process()
         return;
     }
 
-    //AttributeLexer attributeLexer;
+    AttributeLexer attributeLexer(htmlCursor);
+    //TODO
 }
 
 std::string TagLexer::getBeginTagName()

@@ -1,5 +1,9 @@
 #include "Lexer.h"
 
+Lexer::Lexer(HtmlCursor &htmlCursor) : htmlCursor(htmlCursor)
+{
+}
+
 void Lexer::setError(std::string error)
 {
     this->error = error;

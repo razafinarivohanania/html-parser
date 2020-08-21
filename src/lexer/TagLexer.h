@@ -11,10 +11,10 @@
 class TagLexer : Lexer
 {
 public:
+    TagLexer(HtmlCursor &htmlCursor);
     virtual std::vector<HtmlToken *> getTokens();
 
 private:
-    HtmlCursor htmlCursor;
     std::vector<HtmlToken *> tokens;
 
     const std::string INVALID_BEGIN_CHARACTER__BEGIN_TAG = ".-\\/!|<>=\"'"; //TODO to complete

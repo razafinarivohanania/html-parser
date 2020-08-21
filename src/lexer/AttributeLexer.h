@@ -11,10 +11,10 @@
 class AttributeLexer : Lexer
 {
 public:
+    explicit AttributeLexer(HtmlCursor &htmlCursor);
     virtual std::vector<HtmlToken *> getTokens();
 
 private:
-    HtmlCursor htmlCursor;
     std::vector<HtmlToken *> tokens;
 
     void process();
