@@ -1,20 +1,14 @@
 #include "TagLexer.h"
 
-TagLexer::TagLexer(const std::string &html, int &currentIndex) : Lexer(html)
-{
-    setCurrentIndex(currentIndex);
-    process();
-}
-
 void TagLexer::process()
 {
-    if (!isLeftArrowCharacter())
+    if (!htmlCursor.isLeftArrowCharacter())
     {
         setError(buildUnexpectedCharacterError('<'));
         return;
     }
 
-    if (!advance())
+    if (!htmlCursor.advance())
     {
         setError(HTML_NOT_ENDED_CORRECTLY);
         return;
@@ -26,17 +20,17 @@ void TagLexer::process()
         return;
     }
 
-    skipSpacesFamily();
+    htmlCursor.skipSpacesFamily();
 
-    if (isSlashCharacter())
+    if (htmlCursor.isSlashCharacter())
     {
-        if (!advance())
+        if (!htmlCursor.advance())
         {
             setError(HTML_NOT_ENDED_CORRECTLY);
             return;
         }
 
-        if (!isRightArrowCharacter())
+        if (!htmlCursor.isRightArrowCharacter())
         {
             setError(buildUnexpectedCharacterError('>'));
             return;
@@ -47,28 +41,26 @@ void TagLexer::process()
         return;
     }
 
-    std::string html = getHtml();
-    int currentIndex = getCurrentIndex();
-    AttributeLexer attributeLexer(html, currentIndex);
+    //AttributeLexer attributeLexer;
 }
 
 std::string TagLexer::getBeginTagName()
 {
     std::string beginTagName = "";
 
-    if (StringUtils::containsCharacter(INVALID_BEGIN_CHARACTER__BEGIN_TAG, getCurrentCharacter()))
+    if (StringUtils::containsCharacter(INVALID_BEGIN_CHARACTER__BEGIN_TAG, htmlCursor.getCharacter()))
     {
         setError(buildUnexpectedCharacterError());
         return "";
     }
 
-    beginTagName.push_back(getCurrentCharacter());
+    beginTagName.push_back(htmlCursor.getCharacter());
 
     while (true)
     {
-        if (!advance())
+        if (!htmlCursor.advance())
         {
-            if (!isRightArrowCharacter())
+            if (!htmlCursor.isRightArrowCharacter())
             {
                 setError(HTML_NOT_ENDED_CORRECTLY);
                 return "";
@@ -77,18 +69,18 @@ std::string TagLexer::getBeginTagName()
             return beginTagName;
         }
 
-        if (isSpaceCharacterFamily() || isSlashCharacter() || isRightArrowCharacter())
+        if (htmlCursor.isSpaceCharacterFamily() || htmlCursor.isSlashCharacter() || htmlCursor.isRightArrowCharacter())
         {
             return beginTagName;
         }
 
-        if (StringUtils::containsCharacter(INVALID_MIDDLE_CHARACTER_TAG, getCurrentCharacter()))
+        if (StringUtils::containsCharacter(INVALID_MIDDLE_CHARACTER_TAG, htmlCursor.getCharacter()))
         {
             setError(buildUnexpectedCharacterError());
             return "";
         }
 
-        beginTagName.push_back(getCurrentCharacter());
+        beginTagName.push_back(htmlCursor.getCharacter());
     }
 }
 

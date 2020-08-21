@@ -4,47 +4,27 @@
 #include <string>
 #include <vector>
 
+#include "HtmlCursor.h"
 #include "HtmlToken.h"
 #include "../utils/StringUtils.h"
 
 class Lexer
 {
 public:
-    Lexer(const std::string &html);
     virtual std::vector<HtmlToken *> getTokens() = 0;
     bool hasError();
     std::string getError();
 
 protected:
-    void skipSpacesFamily();
-    bool advance();
-    char getCurrentCharacter();
-    std::string getPositionAsString();
+    std::string HTML_NOT_ENDED_CORRECTLY = "HTML not ended correctly";
 
-    bool isLeftArrowCharacter();
-    bool isRightArrowCharacter();
-    bool isExclamationPointCharacter();
-    bool isEqualsCharacter();
-    bool isSlashCharacter();
-    bool isSpaceCharacterFamily();
-
-    void setCurrentIndex(int currentIndex);
     void setError(std::string error);
-    int getCurrentIndex();
 
-    std::string getHtml();
     std::string buildUnexpectedCharacterError(char expectedCharacter);
     std::string buildUnexpectedCharacterError();
 
-    std::string HTML_NOT_ENDED_CORRECTLY = "HTML not ended correctly";
-
 private:
-    int currentLine;
-    int currentColumn;
-    int currentIndex;
-    int htmlSize;
-
-    std::string html;
+    HtmlCursor htmlCursor;
     std::string error;
 };
 

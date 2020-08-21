@@ -5,16 +5,16 @@
 #include <vector>
 
 #include "Lexer.h"
+#include "HtmlCursor.h"
 #include "HtmlToken.h"
 
 class AttributeLexer : Lexer
 {
 public:
-    AttributeLexer(const std::string &html, int &currentIndex);
-
     virtual std::vector<HtmlToken *> getTokens();
 
 private:
+    HtmlCursor htmlCursor;
     std::vector<HtmlToken *> tokens;
 
     void process();
