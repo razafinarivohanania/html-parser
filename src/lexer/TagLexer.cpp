@@ -1,6 +1,6 @@
 #include "TagLexer.h"
 
-TagLexer::TagLexer(const std::string &html, int currentIndex) : Lexer(html)
+TagLexer::TagLexer(const std::string &html, int &currentIndex) : Lexer(html)
 {
     setCurrentIndex(currentIndex);
     process();
@@ -26,6 +26,8 @@ void TagLexer::process()
         return;
     }
 
+    skipSpacesFamily();
+
     if (isSlashCharacter())
     {
         if (!advance())
@@ -44,6 +46,10 @@ void TagLexer::process()
         tokens.push_back(htmlToken);
         return;
     }
+
+    std::string html = getHtml();
+    int currentIndex = getCurrentIndex();
+    AttributeLexer attributeLexer(html, currentIndex);
 }
 
 std::string TagLexer::getBeginTagName()

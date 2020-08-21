@@ -8,6 +8,11 @@ Lexer::Lexer(const std::string &html)
     currentIndex = 0;
 }
 
+std::string Lexer::getHtml()
+{
+    return html;
+}
+
 bool Lexer::hasError()
 {
     return !error.empty();
@@ -53,6 +58,10 @@ void Lexer::skipSpacesFamily()
 char Lexer::getCurrentCharacter()
 {
     return html[currentIndex];
+}
+
+int Lexer::getCurrentIndex() {
+    return currentIndex;
 }
 
 bool Lexer::advance()

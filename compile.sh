@@ -9,6 +9,8 @@ src/lexer/HtmlToken.cpp \
 src/lexer/HtmlToken.h \
 src/lexer/Lexer.cpp \
 src/lexer/Lexer.h \
+src/lexer/AttributeLexer.cpp \
+src/lexer/AttributeLexer.h \
 src/lexer/TagLexer.cpp \
 src/lexer/TagLexer.h \
 src/utils/StringUtils.cpp \

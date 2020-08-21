@@ -30,6 +30,9 @@ protected:
 
     void setCurrentIndex(int currentIndex);
     void setError(std::string error);
+    int getCurrentIndex();
+
+    std::string getHtml();
     std::string buildUnexpectedCharacterError(char expectedCharacter);
     std::string buildUnexpectedCharacterError();
 

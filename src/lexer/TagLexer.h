@@ -2,13 +2,15 @@
 #define TAG_LEXER_H
 
 #include <vector>
+
 #include "Lexer.h"
 #include "HtmlToken.h"
+#include "AttributeLexer.h"
 
 class TagLexer : Lexer
 {
 public:
-    explicit TagLexer(const std::string &html, int currentIndex);
+    explicit TagLexer(const std::string &html, int &currentIndex);
 
     virtual std::vector<HtmlToken *> getTokens();
 
