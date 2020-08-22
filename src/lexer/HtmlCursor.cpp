@@ -59,6 +59,14 @@ bool HtmlCursor::isSpaceCharacterFamily()
     return StringUtils::isSpaceFamily(getCharacter());
 }
 
+bool HtmlCursor::isHyphenCharacter(){
+    return getCharacter() == '-';
+}
+
+bool HtmlCursor::matchesIgnoreCaseCharacter(char character) {
+    return StringUtils::equalsIgnoreCase(getCharacter(), character);
+}
+
 bool HtmlCursor::advance()
 {
     if (position >= htmlSize - 1)

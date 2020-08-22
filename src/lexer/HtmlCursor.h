@@ -22,6 +22,8 @@ public:
     bool isEqualsCharacter();
     bool isSlashCharacter();
     bool isSpaceCharacterFamily();
+    bool isHyphenCharacter();
+    bool matchesIgnoreCaseCharacter(char character);
 
     bool advance();
     void skipSpacesFamily();

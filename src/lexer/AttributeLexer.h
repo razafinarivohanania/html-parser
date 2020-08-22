@@ -8,7 +8,7 @@
 #include "HtmlCursor.h"
 #include "HtmlToken.h"
 
-class AttributeLexer : Lexer
+class AttributeLexer : public Lexer
 {
 public:
     explicit AttributeLexer(HtmlCursor &htmlCursor);

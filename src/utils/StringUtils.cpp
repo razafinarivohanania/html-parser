@@ -42,6 +42,11 @@ namespace StringUtils
         return false;
     }
 
+    bool equalsIgnoreCase(char character1, char character2)
+    {
+        return std::tolower(character1) == std::tolower(character2);
+    }
+
     bool isSpaceFamily(const char character)
     {
         return character == ' ' ||

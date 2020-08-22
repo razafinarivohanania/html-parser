@@ -13,6 +13,7 @@ class Lexer
 public:
     Lexer(HtmlCursor &htmlCursor);
     virtual std::vector<HtmlToken *> getTokens() = 0;
+
     bool hasError();
     std::string getError();
 
