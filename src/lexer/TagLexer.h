@@ -24,7 +24,7 @@ private:
     void getComment();
     void getDoctype();
     void getEndTag();
-    void getBeginTag();
+    std::string getBeginTagName();
 };
 
 #endif

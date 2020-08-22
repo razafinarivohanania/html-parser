@@ -22,8 +22,8 @@ private:
     std::vector<HtmlToken*> htmlTokens;
     const std::string ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const std::string TAG_NAME_LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
-    const std::string INVALID_BEGIN_CHARACTER_TAG = "!|<>=-";//TODO to complete
-    const std::string INVALUD_MIDDLE_CHARACTER_TAG = "!|<>=";//TODO to complete
+    const std::string INVALID_BEGIN_CHARACTER_TAG = "!|<>=-{}%";//TODO to complete
+    const std::string INVALUD_MIDDLE_CHARACTER_TAG = "!|<>={}%";//TODO to complete
     const std::string HTML_NOT_ENDED_CORRECTLY_ERROR = "HTML not ended correctly";
 
     std::string html;

@@ -12,6 +12,7 @@ enum TokenType
     END_TAG,
     ATTRIBUTE_NAME,
     ATTRIBUTE_VALUE,
+    ATTRIBUTE_NAME_WITHOUT_VALUE,
     TEXT
 };
 

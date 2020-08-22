@@ -31,13 +31,15 @@ std::string HtmlToken::typeToString()
     case BEGIN_TAG:
         return "BEGIN_TAG";
     case ORPHAN_TAG:
-        return "END_TAG";
+        return "ORPHAN_TAG";
     case END_TAG:
         return "END_TAG";
     case ATTRIBUTE_NAME:
         return "ATTRIBUTE_NAME";
     case ATTRIBUTE_VALUE:
         return "ATTRIBUTE_VALUE";
+    case ATTRIBUTE_NAME_WITHOUT_VALUE:
+        return "ATTRIBUTE_NAME_WITHOUT_VALUE";
     case TEXT:
         return "TEXT";
     case COMMENT:

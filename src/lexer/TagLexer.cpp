@@ -69,40 +69,17 @@ void TagLexer::process()
         return;
     }
 
-    getBeginTag();
-
-    if (hasError())
-    {
-        return;
-    }
-
-    // Here begin tag skip when found state and not again handle end tag symbols
-    // /
-    if (htmlCursor.isSlashCharacter())
-    {
-        if (!htmlCursor.advance())
-        {
-            setError(HTML_NOT_ENDED_CORRECTLY);
-            return;
-        }
-
-        // />
-        if (!htmlCursor.isRightArrowCharacter())
-        {
-            setError(HTML_NOT_ENDED_CORRECTLY);
-            return;
-        }
-
-        // Because of ending tag we don't retrieve attributes, so skip
-        return;
-    }
-
-    htmlCursor.skipSpacesFamily();
-
+    std::string beginTagName = getBeginTagName();
     AttributeLexer attributeLexer(htmlCursor);
-    if (attributeLexer.hasError()) {
+    if (attributeLexer.hasError())
+    {
         return;
     }
+
+    bool foundFromOrphanTag = attributeLexer.foundFromOrphanTag();
+    TokenType tagTokenType = foundFromOrphanTag ? TokenType::ORPHAN_TAG : TokenType::BEGIN_TAG;
+    HtmlToken *token = new HtmlToken(tagTokenType, beginTagName);
+    tokens.push_back(token);
 
     std::vector<HtmlToken *> attributeTokens = attributeLexer.getTokens();
     for (auto &attributeToken : attributeTokens)
@@ -110,6 +87,7 @@ void TagLexer::process()
         tokens.push_back(attributeToken);
     }
 
+    //TODO close tag
 }
 
 void TagLexer::getComment()
@@ -269,60 +247,34 @@ void TagLexer::getEndTag()
     tokens.push_back(htmlToken);
 }
 
-void TagLexer::getBeginTag()
+std::string TagLexer::getBeginTagName()
 {
     // <
 
     if (!htmlCursor.advance())
     {
         setError(HTML_NOT_ENDED_CORRECTLY);
-        return;
+        return "";
     }
 
     if (StringUtils::containsCharacter(INVALID_BEGIN_CHARACTER_TAG, htmlCursor.getCharacter()))
     {
         setError(buildUnexpectedCharacterError());
-        return;
+        return "";
     }
 
     std::string tagName = "";
-    bool isOrphan = false;
 
     while (true)
     {
         if (!htmlCursor.advance())
         {
             setError(HTML_NOT_ENDED_CORRECTLY);
-            return;
+            return "";
         }
 
         // /
-        if (htmlCursor.isSlashCharacter())
-        {
-            if (!htmlCursor.advance())
-            {
-                setError(HTML_NOT_ENDED_CORRECTLY);
-                return;
-            }
-
-            // />
-            if (!htmlCursor.isRightArrowCharacter())
-            {
-                setError(buildUnexpectedCharacterError());
-                return;
-            }
-
-            isOrphan = true;
-            break;
-        }
-
-        if (htmlCursor.isSpaceCharacterFamily())
-        {
-            htmlCursor.skipSpacesFamily();
-            break;
-        }
-
-        if (htmlCursor.isRightArrowCharacter())
+        if (htmlCursor.isSpaceCharacterFamily() || htmlCursor.isSlashCharacter() || htmlCursor.isRightArrowCharacter())
         {
             break;
         }
@@ -333,15 +285,18 @@ void TagLexer::getBeginTag()
     if (tagName.empty())
     {
         setError(buildUnexpectedCharacterError());
-        return;
+        return "";
     }
 
-    TokenType tokenType = isOrphan ? TokenType::ORPHAN_TAG : TokenType::BEGIN_TAG;
-    HtmlToken *htmlToken = new HtmlToken(tokenType, tagName);
-    tokens.push_back(htmlToken);
+    return tagName;
 }
 
 std::vector<HtmlToken *> TagLexer::getTokens()
 {
     return tokens;
+}
+
+bool AttributeLexer::foundFromOrphanTag()
+{
+    return fromOphanTag;
 }
