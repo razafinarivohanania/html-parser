@@ -10,6 +10,7 @@ namespace Test
     namespace Lexer
     {
         void testTokens(std::vector<HtmlToken *> expectedTokens, std::vector<HtmlToken *> actualTokens);
+        bool testToken(HtmlToken *expectedToken, HtmlToken *actualToken);
         void emptyTokensAndFreeMemories(std::vector<HtmlToken *> expectedTokens, std::vector<HtmlToken *> actualTokens);
     } // namespace Lexer
 

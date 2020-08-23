@@ -4,7 +4,10 @@ static void emptyTokensAndFreeMemories(std::vector<HtmlToken *> tokens)
 {
     for (auto &token : tokens)
     {
-        delete token;
+        if (token != nullptr)
+        {
+            delete token;
+        }
     }
 
     int size = tokens.size();
@@ -20,6 +23,37 @@ static void printTokens(std::vector<HtmlToken *> tokens)
     {
         std::cout << token->toString() << std::endl;
     }
+}
+
+static bool testToken(HtmlToken *expectedToken, HtmlToken *actualToken, const int index)
+{
+    if (expectedToken->getType() != actualToken->getType())
+    {
+        std::cout << "ERROR : Expected type [" << expectedToken->getTypeAsString() << "] but found [" << actualToken->getTypeAsString() << "]";
+        if (index >= 0)
+        {
+            std::cout << " on [" << index << "] index";
+        }
+
+        std::cout << std::endl
+                  << std::endl;
+        return false;
+    }
+
+    if (expectedToken->getValue() != actualToken->getValue())
+    {
+        std::cout << "ERROR : Expected value [" << expectedToken->getValue() << "] but found [" << actualToken->getValue() << "]";
+        if (index >= 0)
+        {
+            std::cout << " on [" << index << "] index";
+        }
+
+        std::cout << std::endl
+                  << std::endl;
+        return false;
+    }
+
+    return true;
 }
 
 namespace Test
@@ -41,20 +75,8 @@ namespace Test
 
             for (size_t i = 0; i < expectedSize; i++)
             {
-                HtmlToken *expectedToken = expectedTokens[i];
-                HtmlToken *actualToken = actualTokens[i];
-
-                if (expectedToken->getType() != actualToken->getType())
+                if (!testToken(expectedTokens[i], actualTokens[i], i))
                 {
-                    std::cout << "ERROR : Expected type [" << expectedToken->getTypeAsString() << "] but found [" << actualToken->getTypeAsString() << "] on [" << i << "] index" << std::endl
-                              << std::endl;
-                    return;
-                }
-
-                if (expectedToken->getValue() != actualToken->getValue())
-                {
-                    std::cout << "ERROR : Expected value [" << expectedToken->getValue() << "] but found [" << actualToken->getValue() << "] on [" << i << "] index" << std::endl
-                              << std::endl;
                     return;
                 }
             }
@@ -68,6 +90,11 @@ namespace Test
         {
             emptyTokensAndFreeMemories(expectedTokens);
             emptyTokensAndFreeMemories(actualTokens);
+        }
+
+        bool testToken(HtmlToken *expectedToken, HtmlToken *actualToken)
+        {
+            return testToken(expectedToken, actualToken, -1);
         }
     } // namespace Lexer
 } // namespace Test

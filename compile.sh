@@ -27,6 +27,10 @@ test/lexer/TokenTest.h \
 test/lexer/TokenTest.cpp \
 test/lexer/TagLexerTest.cpp \
 test/lexer/TagLexerTest.h \
+test/lexer/CommentLexerTest.h \
+test/lexer/CommentLexerTest.cpp \
+test/lexer/DoctypeLexerTest.cpp \
+test/lexer/DoctypeLexerTest.h \
 -o html-parser
 
 ./html-parser

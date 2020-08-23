@@ -10,7 +10,7 @@ DoctypeLexer::DoctypeLexer(HtmlCursor &htmlCursor) : htmlCursor(htmlCursor)
 
 HtmlToken *DoctypeLexer::getToken()
 {
-    return nullptr;
+    return token;
 }
 
 bool DoctypeLexer::isSuccess()
