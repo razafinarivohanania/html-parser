@@ -62,7 +62,7 @@ namespace Test
             }
 
             std::vector<HtmlToken *> expectedTokens;
-            expectedTokens.push_back(new HtmlToken(TokenType::BEGIN_TAG, "div"));
+            expectedTokens.push_back(new HtmlToken(TokenType::END_TAG, "div"));
 
             std::vector<HtmlToken *> actualTokens = tagLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);

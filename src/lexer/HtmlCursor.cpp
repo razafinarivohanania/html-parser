@@ -227,7 +227,7 @@ bool HtmlCursor::isEqualsCharacter()
 
 bool HtmlCursor::isSlashCharacter()
 {
-    return getCharacter() == '!';
+    return getCharacter() == '/';
 }
 
 bool HtmlCursor::isSpaceCharacterFamily()

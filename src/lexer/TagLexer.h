@@ -26,6 +26,8 @@ private:
     int initialPosition;
 
     void process();
+    void getEndTag();
+    void getBeginOrOrphanTag();
     bool isValidTagName(const std::string &tagName);
 };
 
