@@ -9,7 +9,16 @@ void TagLexer::process()
 {
     htmlCursor.skipSpacesFamily();
 
-    if (htmlCursor.endReached()) {
+    if (htmlCursor.endReached())
+    {
+        return;
+    }
+
+    if (getDoctype()) {
+        process();
+    }
+
+    if (true) {
         return;
     }
 
@@ -142,54 +151,36 @@ void TagLexer::getComment()
     tokens.push_back(htmlToken);
 }
 
-void TagLexer::getDoctype()
+/**
+ * Treat following syntaxes :
+ * <!doctype html>
+ * <!DOCTYPE html>
+ * <!doctype   html>
+ * <!DOCTYPE   html>
+ * <!doctype html  >
+ * <!DOCTYPE html  >
+ * <!doctype    html  >
+ * <!DOCTYPE    html  >
+ **/
+bool TagLexer::getDoctype()
 {
-    // Already <!D
-
-    std::string octype = "OCTYPE";
-    int size = octype.size();
-
-    for (int i = 0; i < size; i++)
+    if (htmlCursor.skipIfFound("<!DOCTYPE", true))
     {
-        if (!htmlCursor.advance())
+        htmlCursor.skipSpacesFamily();
+        std::string html = htmlCursor.skipAndGetStringFound("html", true);
+        if (!html.empty())
         {
-            setError(HTML_NOT_ENDED_CORRECTLY);
-            return;
-        }
-
-        char expectedCharacter = octype[i];
-        if (!htmlCursor.matchesIgnoreCaseCharacter(expectedCharacter))
-        {
-            setError(buildUnexpectedCharacterError(expectedCharacter));
-            return;
+            htmlCursor.skipSpacesFamily();
+            if (htmlCursor.isRightArrowCharacter())
+            {
+                HtmlToken *htmlToken = new HtmlToken(TokenType::DOCTYPE, html);
+                tokens.push_back(htmlToken);
+                return true;
+            }
         }
     }
 
-    // Already <!DOCTYPE
-
-    htmlCursor.skipSpacesFamily();
-
-    std::string html = "html";
-    size = html.size();
-
-    for (int i = 0; i < size; i++)
-    {
-        if (!htmlCursor.advance())
-        {
-            setError(HTML_NOT_ENDED_CORRECTLY);
-            return;
-        }
-
-        char expectedCharacter = html[i];
-        if (!htmlCursor.matchesIgnoreCaseCharacter(expectedCharacter))
-        {
-            setError(buildUnexpectedCharacterError(expectedCharacter));
-            return;
-        }
-    }
-
-    HtmlToken *htmlToken = new HtmlToken(TokenType::DOCTYPE, html);
-    tokens.push_back(htmlToken);
+    return false;
 }
 
 void TagLexer::getEndTag()

@@ -9,13 +9,21 @@
 class HtmlCursor
 {
 public:
-    HtmlCursor(const std::string &html);
+    HtmlCursor(std::string &html);
 
+    void resetHtml(std::string &html);
+
+    int getHtmlSize();
     int getPosition();
     int getLine();
     int getColumn();
 
     char getCharacter();
+    char getCharacter(const size_t position);
+
+    bool startsWith(const std::string &string, const bool ignoreCase);
+    bool skipIfFound(const std::string &string, const bool ignoreCase);
+    std::string skipAndGetStringFound(const std::string &string, const bool ignoreCase);
 
     bool isLeftArrowCharacter();
     bool isRightArrowCharacter();

@@ -8,8 +8,14 @@ namespace Test
         {
             std::cout << "Test lower case doctype ..." << std::endl;
 
-            HtmlCursor htmlCursor("<!doctype html>");
+            std::string doctype = "<!doctype html>";
+            HtmlCursor htmlCursor(doctype);
             TagLexer tagLexer(htmlCursor);
+
+            if (tagLexer.hasError())
+            {
+                std::cout << "ERROR : " << tagLexer.getError() << std::endl;
+            }
 
             std::vector<HtmlToken *> expectedTokens;
             expectedTokens.push_back(new HtmlToken(TokenType::DOCTYPE, "html"));

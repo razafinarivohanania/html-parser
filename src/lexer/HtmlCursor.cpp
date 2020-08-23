@@ -1,6 +1,11 @@
 #include "HtmlCursor.h"
 
-HtmlCursor::HtmlCursor(const std::string &html)
+HtmlCursor::HtmlCursor(std::string &html)
+{
+    resetHtml(html);
+}
+
+void HtmlCursor::resetHtml(std::string &html)
 {
     this->html = html;
     htmlSize = html.size();
@@ -12,6 +17,11 @@ HtmlCursor::HtmlCursor(const std::string &html)
 int HtmlCursor::getPosition()
 {
     return position;
+}
+
+int HtmlCursor::getHtmlSize()
+{
+    return htmlSize;
 }
 
 int HtmlCursor::getLine()
@@ -27,6 +37,105 @@ int HtmlCursor::getColumn()
 char HtmlCursor::getCharacter()
 {
     return html[position];
+}
+
+char HtmlCursor::getCharacter(const size_t position)
+{
+    return position < html.size() ? html[position] : '\0';
+}
+
+bool HtmlCursor::startsWith(const std::string &string,
+                            const bool ignoreCase)
+{
+    int size = string.size();
+
+    for (int i = 0; i < size; i++)
+    {
+        char character = string[i];
+        if (ignoreCase)
+        {
+            character = std::tolower(character);
+        }
+
+        int j = position + i;
+        if (j >= htmlSize - 1)
+        {
+            return false;
+        }
+
+        char htmlCharacter = html[j];
+        if (ignoreCase)
+        {
+            htmlCharacter = std::tolower(htmlCharacter);
+        }
+
+        if (character != htmlCharacter)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool HtmlCursor::skipIfFound(const std::string &string,
+                             const bool ignoreCase)
+{
+    if (!startsWith(string, ignoreCase))
+    {
+        return false;
+    }
+
+    int size = string.size();
+    for (int i = 0; i < size; i++)
+    {
+        advance();
+    }
+
+    return true;
+}
+
+std::string HtmlCursor::skipAndGetStringFound(const std::string &string,
+                                              const bool ignoreCase)
+{
+    int size = string.size();
+    std::string stringFound = "";
+
+    for (int i = 0; i < size; i++)
+    {
+        char character = string[i];
+        if (ignoreCase)
+        {
+            character = std::tolower(character);
+        }
+
+        int j = position + i;
+        if (j >= htmlSize - 1)
+        {
+            return "";
+        }
+
+        char htmlCharacter = html[j];
+        if (ignoreCase)
+        {
+            htmlCharacter = std::tolower(htmlCharacter);
+        }
+
+        if (character != htmlCharacter)
+        {
+            return "";
+        }
+
+        stringFound.push_back(html[j]);
+    }
+
+    size = string.size();
+    for (int i = 0; i < size; i++)
+    {
+        advance();
+    }
+
+    return stringFound;
 }
 
 bool HtmlCursor::isLeftArrowCharacter()

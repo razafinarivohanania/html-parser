@@ -22,7 +22,7 @@ private:
 
     void process();
     void getComment();
-    void getDoctype();
+    bool getDoctype();
     void getEndTag();
     std::string getBeginTagName();
 };

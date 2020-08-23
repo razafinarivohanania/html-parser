@@ -8,12 +8,13 @@ namespace Test
         {
             std::cout << "Test no attribute ..." << std::endl;
 
-            HtmlCursor htmlCursor("");
+            std::string html = "";
+            HtmlCursor htmlCursor(html);
             AttributeLexer attributeLexer(htmlCursor);
 
             if (attributeLexer.hasError())
             {
-                std::cout << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -27,12 +28,13 @@ namespace Test
         {
             std::cout << "Test one attribute with one value ..." << std::endl;
 
-            HtmlCursor htmlCursor("checked");
+            std::string attribute = "checked";
+            HtmlCursor htmlCursor(attribute);
             AttributeLexer attributeLexer(htmlCursor);
 
             if (attributeLexer.hasError())
             {
-                std::cout << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -47,12 +49,13 @@ namespace Test
         {
             std::cout << "Test two attributes without values ..." << std::endl;
 
-            HtmlCursor htmlCursor("checked fullWidth");
+            std::string attributes = "checked fullWidth";
+            HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
             if (attributeLexer.hasError())
             {
-                std::cout << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -68,12 +71,13 @@ namespace Test
         {
             std::cout << "Test attribute with value using quote ..." << std::endl;
 
-            HtmlCursor htmlCursor("class='content'");
+            std::string attribute = "class='content'";
+            HtmlCursor htmlCursor(attribute);
             AttributeLexer attributeLexer(htmlCursor);
 
             if (attributeLexer.hasError())
             {
-                std::cout << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -89,12 +93,13 @@ namespace Test
         {
             std::cout << "Test two attributes with values using quote ..." << std::endl;
 
-            HtmlCursor htmlCursor("id='main' class='content'");
+            std::string attributes = "id='main' class='content'";
+            HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
             if (attributeLexer.hasError())
             {
-                std::cout << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -112,12 +117,13 @@ namespace Test
         {
             std::cout << "Test attribute with value using double quote ..." << std::endl;
 
-            HtmlCursor htmlCursor("class=\"content\"");
+            std::string attribute = "class=\"content\"";
+            HtmlCursor htmlCursor(attribute);
             AttributeLexer attributeLexer(htmlCursor);
 
             if (attributeLexer.hasError())
             {
-                std::cout << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -133,12 +139,13 @@ namespace Test
         {
             std::cout << "Test two attributes with values using double quote ..." << std::endl;
 
-            HtmlCursor htmlCursor("id=\"main\" class=\"content\"");
+            std::string attributes = "id=\"main\" class=\"content\"";
+            HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
             if (attributeLexer.hasError())
             {
-                std::cout << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -156,12 +163,13 @@ namespace Test
         {
             std::cout << "Test two attributes with values quote and double quote ..." << std::endl;
 
-            HtmlCursor htmlCursor("id=\'main\' class=\"content\"");
+            std::string attributes = "id=\'main\' class=\"content\"";
+            HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
             if (attributeLexer.hasError())
             {
-                std::cout << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -179,12 +187,13 @@ namespace Test
         {
             std::cout << "Test two attributes with values using double quote and quote ..." << std::endl;
 
-            HtmlCursor htmlCursor("id=\"main\" class=\'content\'");
+            std::string attributes = "id=\"main\" class=\'content\'";
+            HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
             if (attributeLexer.hasError())
             {
-                std::cout << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -202,12 +211,13 @@ namespace Test
         {
             std::cout << "Test three attributes with values and without value using quote and double quote ..." << std::endl;
 
-            HtmlCursor htmlCursor("id=\"main\" class=\'content\' checked");
+            std::string attributes = "id=\"main\" class=\'content\' checked";
+            HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
             if (attributeLexer.hasError())
             {
-                std::cout << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
