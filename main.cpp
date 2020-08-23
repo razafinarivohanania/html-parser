@@ -48,7 +48,7 @@ void testComments()
 
 void testTags()
 {
-    //Test::Lexer::testBeginTag();
+    Test::Lexer::testBeginTag();
     Test::Lexer::testOrphanTag();
     Test::Lexer::testEndTag();
 }

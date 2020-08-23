@@ -44,7 +44,6 @@ void TagLexer::process()
 
     if (htmlCursor.isSlashCharacter())
     {
-        htmlCursor.advance();
         getEndTag();
     }
     else
@@ -55,6 +54,7 @@ void TagLexer::process()
 
 void TagLexer::getEndTag()
 {
+    htmlCursor.advance();
     Result tagName = htmlCursor.getStringBeforeFirstCharacterFound(" >");
     if (!tagName.success || !isValidTagName(tagName.content))
     {
@@ -96,6 +96,14 @@ void TagLexer::getBeginOrOrphanTag()
     if (htmlCursor.isSlashCharacter())
     {
         getOrphanTag(tagName.content);
+        return;
+    }
+
+    if (htmlCursor.isRightArrowCharacter())
+    {
+        htmlCursor.advance();
+        success = true;
+        tokens.push_back(new HtmlToken(TokenType::BEGIN_TAG, tagName.content));
         return;
     }
 
