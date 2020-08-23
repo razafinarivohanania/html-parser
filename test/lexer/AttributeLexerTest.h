@@ -6,9 +6,16 @@
 
 #include "../../src/lexer/AttributeLexer.h"
 #include "../../src/lexer/HtmlCursor.h"
+#include "TokenTest.h"
 
-namespace Test {
-    void testOneAttributeWithoutValue();
-}
+namespace Test
+{
+    namespace Lexer
+    {
+        void testOneAttributeWithoutValue();
+        void testTwoAttributesWithoutValues();
+    } // namespace Lexer
+
+} // namespace Test
 
 #endif

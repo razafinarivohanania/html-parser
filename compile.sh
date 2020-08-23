@@ -2,8 +2,6 @@ rm ./html-parser
 
 g++ -std=c++11 \
 -Wall \
-test/lexer/AttributeLexerTest.h \
-test/lexer/AttributeLexerTest.cpp \
 main.cpp \
 src/lexer/HtmlCursor.cpp \
 src/lexer/HtmlCursor.h \
@@ -21,6 +19,10 @@ src/utils/StringUtils.cpp \
 src/utils/StringUtils.h \
 src/utils/FileReader.cpp \
 src/utils/FileReader.h \
+test/lexer/AttributeLexerTest.h \
+test/lexer/AttributeLexerTest.cpp \
+test/lexer/TokenTest.h \
+test/lexer/TokenTest.cpp \
 -o html-parser
 
 ./html-parser

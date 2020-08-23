@@ -18,11 +18,11 @@ std::string HtmlToken::getValue()
 
 std::string HtmlToken::toString()
 {
-    std::string typeAsString = typeToString();
+    std::string typeAsString = getTypeAsString();
     return "HtmlToken { type : " + typeAsString + ", value : " + value + " }";
 }
 
-std::string HtmlToken::typeToString()
+std::string HtmlToken::getTypeAsString()
 {
     switch (type)
     {

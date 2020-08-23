@@ -2,35 +2,27 @@
 
 namespace Test
 {
-    void testOneAttributeWithoutValue()
+    namespace Lexer
     {
-        HtmlCursor htmlCursor("checked");
-        AttributeLexer attributeLexer(htmlCursor);
-        std::vector<HtmlToken *> tokens = attributeLexer.getTokens();
-
-        if (attributeLexer.hasError()) {
-            std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
-            return;
-        }
-
-        if (tokens.size() != 1)
+        void testOneAttributeWithoutValue()
         {
-            std::cout << "ERROR : Expected tokens size [1] but found [" << tokens.size() << "]" << std::endl;
-            return;
+            std::cout << "Test one attribute with one value ..." << std::endl;
+
+            HtmlCursor htmlCursor("checked");
+            AttributeLexer attributeLexer(htmlCursor);
+
+            std::vector<HtmlToken *> expectedTokens;
+            expectedTokens.push_back(new HtmlToken(TokenType::ATTRIBUTE_NAME_WITHOUT_VALUE, "checked"));
+
+            std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
+            Test::Lexer::testTokens(expectedTokens, actualTokens);
+            Test::Lexer::freeMemories(expectedTokens, actualTokens);
         }
 
-        HtmlToken *htmlToken = tokens.at(0);
-        std::string expectedToken = "HtmlToken { type : ATTRIBUTE_NAME_WITHOUT_VALUE, value : checked }";
+        void testTwoAttributesWithoutValues()
+        {
 
-        if (htmlToken->toString() != expectedToken) {
-            std::cout << "ERROR : Expected token" << std::endl;
-            std::cout << "        " << expectedToken << std::endl;
-            std::cout << "but found" << std::endl;
-            std::cout << "        " << htmlToken->toString() << std::endl;
-        } else {
-            std::cout << htmlToken->toString() << std::endl;
         }
+    } // namespace Lexer
 
-        delete htmlToken;
-    }
 } // namespace Test

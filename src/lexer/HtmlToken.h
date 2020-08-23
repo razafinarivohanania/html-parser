@@ -22,13 +22,12 @@ public:
     HtmlToken(TokenType type, std::string value);
 
     TokenType getType();
+    std::string getTypeAsString();
     std::string getValue();
     std::string toString();
 private:
     TokenType type;
     std::string value;
-
-    std::string typeToString();
 };
 
 #endif

@@ -5,5 +5,5 @@
 
 int main()
 {
-    Test::testOneAttributeWithoutValue();
+    Test::Lexer::testOneAttributeWithoutValue();
 }
