@@ -32,6 +32,14 @@ void AttributeLexer::process()
     {
         htmlCursor.skipSpacesFamily();
 
+        if (!htmlCursor.advance())
+        {
+            setError(buildUnexpectedCharacterError());
+            return;
+        }
+
+        htmlCursor.skipSpacesFamily();
+
         std::string attributeValue = getAttributeValue();
         if (hasError())
         {

@@ -34,7 +34,7 @@ namespace Test
                 }
             }
 
-            std::cout << "Test success" << std::endl;
+            std::cout << "Test success" << std::endl << std::endl;
         };
 
         void freeMemories(std::vector<HtmlToken *> expectedTokens,

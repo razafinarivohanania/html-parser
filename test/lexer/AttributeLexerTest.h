@@ -14,6 +14,7 @@ namespace Test
     {
         void testOneAttributeWithoutValue();
         void testTwoAttributesWithoutValues();
+        void testAttributeWithValueUsingQuote();
     } // namespace Lexer
 
 } // namespace Test

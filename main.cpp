@@ -6,4 +6,6 @@
 int main()
 {
     Test::Lexer::testOneAttributeWithoutValue();
+    Test::Lexer::testTwoAttributesWithoutValues();
+    Test::Lexer::testAttributeWithValueUsingQuote();
 }
