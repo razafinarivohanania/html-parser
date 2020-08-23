@@ -158,14 +158,14 @@ Result HtmlCursor::getStringBefore(const std::string &string)
 
         if (found)
         {
+            result.success = true;
+            result.content = stringBefore;
             break;
         }
 
         stringBefore.push_back(html[i]);
     }
 
-    result.success = true;
-    result.content = stringBefore;
     return result;
 }
 
@@ -179,18 +179,21 @@ Result HtmlCursor::getStringBeforeFirstCharacterFound(const std::string &charact
 
     std::string stringBefore = "";
 
-    for (int i = position; i < htmlSize ; i++)
+    for (int i = position; i < htmlSize; i++)
     {
         bool found = false;
         char character = html[i];
-        for (int j = 0; j < size; j++){
-            if (character == characters[j]) {
+        for (int j = 0; j < size; j++)
+        {
+            if (character == characters[j])
+            {
                 found = true;
                 break;
             }
         }
 
-        if (found) {
+        if (found)
+        {
             result.success = true;
             result.content = stringBefore;
             break;
@@ -285,6 +288,16 @@ bool HtmlCursor::advance()
 
     position++;
     return true;
+}
+
+std::string HtmlCursor::getRestContent() {
+    std::string restContent = "";
+
+    for (int i = position; i < htmlSize; i++){
+        restContent.push_back(html[i]);
+    }
+
+    return restContent;
 }
 
 bool HtmlCursor::endReached()

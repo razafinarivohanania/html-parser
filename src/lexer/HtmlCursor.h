@@ -27,6 +27,7 @@ public:
     Result getStringStarting(const std::string &string, const bool ignoreCase);
     Result getStringBefore(const std::string &string);
     Result getStringBeforeFirstCharacterFound(const std::string &characters);
+    std::string getRestContent();
 
     bool isLeftArrowCharacter();
     bool isRightArrowCharacter();
