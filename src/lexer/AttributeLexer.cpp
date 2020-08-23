@@ -3,7 +3,13 @@
 AttributeLexer::AttributeLexer(HtmlCursor &htmlCursor) : Lexer(htmlCursor)
 {
     fromOphanTag = false;
+    success = true;
     process();
+}
+
+bool AttributeLexer::isSuccess()
+{
+    return success;
 }
 
 void AttributeLexer::process()
@@ -15,9 +21,10 @@ void AttributeLexer::process()
         return;
     }
 
-    std::string attributeName = getAttributeName();
-    if (hasError())
+    Result attributeName = getAttributeName();
+    if (!attributeName.success)
     {
+        success = false;
         return;
     }
 
@@ -29,27 +36,28 @@ void AttributeLexer::process()
 
         if (!htmlCursor.advance())
         {
-            setError(buildUnexpectedCharacterError());
+            success = false;
             return;
         }
 
         htmlCursor.skipSpacesFamily();
 
-        Result result = getAttributeValue();
-        if (!result.success)
+        Result attributeValue = getAttributeValue();
+        if (!attributeValue.success)
         {
+            success = false;
             return;
         }
 
-        HtmlToken *nameToken = new HtmlToken(TokenType::ATTRIBUTE_NAME_WITH_VALUE, attributeName);
-        HtmlToken *valueToken = new HtmlToken(TokenType::ATTRIBUTE_VALUE, result.content);
+        HtmlToken *nameToken = new HtmlToken(TokenType::ATTRIBUTE_NAME_WITH_VALUE, attributeName.content);
+        HtmlToken *valueToken = new HtmlToken(TokenType::ATTRIBUTE_VALUE, attributeValue.content);
 
         tokens.push_back(nameToken);
         tokens.push_back(valueToken);
     }
     else
     {
-        HtmlToken *token = new HtmlToken(TokenType::ATTRIBUTE_NAME_WITHOUT_VALUE, attributeName);
+        HtmlToken *token = new HtmlToken(TokenType::ATTRIBUTE_NAME_WITHOUT_VALUE, attributeName.content);
         tokens.push_back(token);
     }
 
@@ -59,14 +67,17 @@ void AttributeLexer::process()
     process();
 }
 
-std::string AttributeLexer::getAttributeName()
+Result AttributeLexer::getAttributeName()
 {
     std::string attributeName = "";
 
+    Result result;
+    result.success = false;
+    result.content = "";
+
     if (StringUtils::containsCharacter(INVALID_ATTRIBUTE_NAME_CHARACTERS, htmlCursor.getCharacter()))
     {
-        setError(buildUnexpectedCharacterError());
-        return "";
+        return result;
     }
 
     attributeName.push_back(htmlCursor.getCharacter());
@@ -80,19 +91,15 @@ std::string AttributeLexer::getAttributeName()
 
         if (StringUtils::containsCharacter(INVALID_ATTRIBUTE_NAME_CHARACTERS, htmlCursor.getCharacter()))
         {
-            setError(buildUnexpectedCharacterError());
-            return "";
+            return result;
         }
 
         attributeName.push_back(htmlCursor.getCharacter());
     }
 
-    if (attributeName.empty())
-    {
-        setError(buildUnexpectedCharacterError());
-    }
-
-    return attributeName;
+    result.success = true;
+    result.content = attributeName;
+    return result;
 }
 
 /**
