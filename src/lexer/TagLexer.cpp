@@ -56,8 +56,7 @@ void TagLexer::process()
         return;
     }
 
-    htmlCursor.skipSpacesFamily();
-
+    htmlCursor.skipBlocs(tagName.content.size());
     if (htmlCursor.isSlashCharacter())
     {
         if (endTag)
@@ -78,6 +77,13 @@ void TagLexer::process()
         HtmlToken *htmlToken = new HtmlToken(TokenType::ORPHAN_TAG, tagName.content);
         tokens.push_back(htmlToken);
         return;
+    }
+
+    if (htmlCursor.isRightArrowCharacter())
+    {
+        htmlCursor.advance();
+    } else {
+        htmlCursor.skipSpacesFamily();
     }
 
     AttributeLexer attributeLexer(htmlCursor);
