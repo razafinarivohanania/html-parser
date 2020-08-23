@@ -2,29 +2,30 @@
 #define TAG_LEXER_H
 
 #include <vector>
-
-#include "Lexer.h"
 #include "HtmlCursor.h"
 #include "HtmlToken.h"
 #include "AttributeLexer.h"
+#include "../utils/StringUtils.h"
 
-class TagLexer : public Lexer
+class TagLexer
 {
 public:
     TagLexer(HtmlCursor &htmlCursor);
-    virtual std::vector<HtmlToken *> getTokens();
+    std::vector<HtmlToken *> getTokens();
+    bool isSuccess();
+    int getInitialPosition();
 
 private:
-    std::vector<HtmlToken *> tokens;
+    const std::string INVALID_BEGIN_CHARACTER_TAG = ".-\\/!|<>=\"'"; // TODO to complet
+    const std::string INVALID_MIDDLE_CHARACTER_TAG = "\\/!|<>=\"'";  // TODO to complete
 
-    const std::string INVALID_BEGIN_CHARACTER_TAG = ".-\\/!|<>=\"'"; //TODO to complete
-    const std::string INVALID_MIDDLE_CHARACTER_TAG = "\\/!|<>=\"'";         //TODO to complete
+    HtmlCursor htmlCursor;
+    std::vector<HtmlToken *> tokens;
+    bool success;
+    int initialPosition;
 
     void process();
-    bool getComment();
-    bool getDoctype();
-    void getEndTag();
-    std::string getBeginTagName();
+    bool isValidTagName(const std::string &tagName);
 };
 
 #endif

@@ -10,20 +10,19 @@
 #include "HtmlToken.h"
 #include "Result.h"
 
-class AttributeLexer : public Lexer
+class AttributeLexer
 {
 public:
     explicit AttributeLexer(HtmlCursor &htmlCursor);
     virtual std::vector<HtmlToken *> getTokens();
-    bool foundFromOrphanTag();
     bool isSuccess();
 
 private:
+    HtmlCursor htmlCursor;
     bool success;
-    bool fromOphanTag;
     std::vector<HtmlToken *> tokens;
 
-    std::string INVALID_ATTRIBUTE_NAME_CHARACTERS = "<>/";//TODO
+    std::string INVALID_ATTRIBUTE_NAME_CHARACTERS = "<>/"; //TODO
 
     void process();
     Result getAttributeName();

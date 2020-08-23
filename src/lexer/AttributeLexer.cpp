@@ -1,9 +1,8 @@
 #include "AttributeLexer.h"
 
-AttributeLexer::AttributeLexer(HtmlCursor &htmlCursor) : Lexer(htmlCursor)
+AttributeLexer::AttributeLexer(HtmlCursor &htmlCursor) : htmlCursor(htmlCursor)
 {
-    fromOphanTag = false;
-    success = true;
+    success = false;
     process();
 }
 
@@ -14,17 +13,15 @@ bool AttributeLexer::isSuccess()
 
 void AttributeLexer::process()
 {
-    htmlCursor.skipSpacesFamily();
-
-    if (htmlCursor.endReached() || htmlCursor.isSlashCharacter() || htmlCursor.isRightArrowCharacter())
+    if (htmlCursor.endReached() || htmlCursor.isOneOfCharacters("/>"))
     {
+        success = true;
         return;
     }
 
     Result attributeName = getAttributeName();
     if (!attributeName.success)
     {
-        success = false;
         return;
     }
 
@@ -36,7 +33,6 @@ void AttributeLexer::process()
 
         if (!htmlCursor.advance())
         {
-            success = false;
             return;
         }
 
@@ -45,7 +41,6 @@ void AttributeLexer::process()
         Result attributeValue = getAttributeValue();
         if (!attributeValue.success)
         {
-            success = false;
             return;
         }
 
@@ -63,7 +58,7 @@ void AttributeLexer::process()
 
     htmlCursor.skipSpacesFamily();
 
-    //Retrieve others attribute name and value
+    // Retrieve other attribute name and value
     process();
 }
 
@@ -86,7 +81,9 @@ Result AttributeLexer::getAttributeName()
     {
         if (!htmlCursor.advance() || htmlCursor.isOneOfCharacters("= />"))
         {
-            break;
+            result.success = true;
+            result.content = attributeName;
+            return result;
         }
 
         if (StringUtils::containsCharacter(INVALID_ATTRIBUTE_NAME_CHARACTERS, htmlCursor.getCharacter()))
@@ -96,10 +93,6 @@ Result AttributeLexer::getAttributeName()
 
         attributeName.push_back(htmlCursor.getCharacter());
     }
-
-    result.success = true;
-    result.content = attributeName;
-    return result;
 }
 
 /**

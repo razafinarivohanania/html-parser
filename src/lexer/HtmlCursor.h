@@ -26,6 +26,7 @@ public:
     void skipBlocs(const int sizeBlocs);
     Result getStringStarting(const std::string &string, const bool ignoreCase);
     Result getStringBefore(const std::string &string);
+    Result getStringBeforeFirstCharacterFound(const std::string &characters);
 
     bool isLeftArrowCharacter();
     bool isRightArrowCharacter();

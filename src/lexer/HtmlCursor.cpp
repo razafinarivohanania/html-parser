@@ -140,7 +140,7 @@ Result HtmlCursor::getStringBefore(const std::string &string)
 
     for (int i = position; i < htmlSize; i++)
     {
-        bool isFound = true;
+        bool found = true;
         for (int j = 0; j < size; j++)
         {
             int k = i + j;
@@ -151,12 +151,12 @@ Result HtmlCursor::getStringBefore(const std::string &string)
 
             if (html[k] != string[j])
             {
-                isFound = false;
+                found = false;
                 break;
             }
         }
 
-        if (isFound)
+        if (found)
         {
             break;
         }
@@ -166,6 +166,39 @@ Result HtmlCursor::getStringBefore(const std::string &string)
 
     result.success = true;
     result.content = stringBefore;
+    return result;
+}
+
+Result HtmlCursor::getStringBeforeFirstCharacterFound(const std::string &characters)
+{
+    int size = characters.size();
+
+    Result result;
+    result.success = false;
+    result.content = "";
+
+    std::string stringBefore = "";
+
+    for (int i = position; i < htmlSize ; i++)
+    {
+        bool found = false;
+        char character = html[i];
+        for (int j = 0; j < size; j++){
+            if (character == characters[j]) {
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            result.success = true;
+            result.content = stringBefore;
+            break;
+        }
+
+        stringBefore.push_back(character);
+    }
+
     return result;
 }
 
@@ -209,10 +242,13 @@ bool HtmlCursor::matchesIgnoreCaseCharacter(char character)
     return StringUtils::equalsIgnoreCase(getCharacter(), character);
 }
 
-bool HtmlCursor::isOneOfCharacters(const std::string &characters) {
+bool HtmlCursor::isOneOfCharacters(const std::string &characters)
+{
     int size = characters.size();
-    for (int i = 0; i < size; i++) {
-        if (getCharacter() == characters[i]) {
+    for (int i = 0; i < size; i++)
+    {
+        if (getCharacter() == characters[i])
+        {
             return true;
         }
     }
