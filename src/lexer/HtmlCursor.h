@@ -23,6 +23,8 @@ public:
     bool isSlashCharacter();
     bool isSpaceCharacterFamily();
     bool isHyphenCharacter();
+    bool isQuote();
+    bool isDoubleQuote();
     bool matchesIgnoreCaseCharacter(char character);
 
     bool advance();

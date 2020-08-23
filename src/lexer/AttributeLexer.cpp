@@ -104,7 +104,8 @@ std::string AttributeLexer::getAttributeName()
         }
     }
 
-    if (attributeName.empty()) {
+    if (attributeName.empty())
+    {
         setError(buildUnexpectedCharacterError());
     }
 
@@ -113,7 +114,26 @@ std::string AttributeLexer::getAttributeName()
 
 std::string AttributeLexer::getAttributeValue()
 {
-    return "";//TODO
+    bool isQuote = htmlCursor.isQuote();
+
+    if (!isQuote && !htmlCursor.isDoubleQuote())
+    {
+        setError(buildUnexpectedCharacterError());
+        return;
+    }
+
+    std::string attributeValue = "";
+
+    while (true) {
+        if (!htmlCursor.advance()) {
+            setError(buildUnexpectedCharacterError());
+            return "";
+        }
+
+        if (htmlCursor.isQuote() && isQuote || htmlCursor.isDoubleQuote() && !isQuote) {
+            return attributeValue;
+        }
+    }
 }
 
 std::vector<HtmlToken *> AttributeLexer::getTokens()
