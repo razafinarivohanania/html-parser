@@ -47,6 +47,7 @@ void DoctypeLexer::process()
         return;
     }
 
+    success = true;
     htmlCursor.advance();
     token = new HtmlToken(TokenType::DOCTYPE, html);
 }

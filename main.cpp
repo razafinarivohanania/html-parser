@@ -22,7 +22,7 @@ void testAttributes()
 void testDoctypes()
 {
     Test::Lexer::testDoctype("<!doctype html>", "html");
-    /* Test::Lexer::testDoctype("<!DOCTYPE html>", "html");
+    Test::Lexer::testDoctype("<!DOCTYPE html>", "html");
     Test::Lexer::testDoctype("<!DOCTYPE HTML>", "HTML");
     Test::Lexer::testDoctype("<!doctype html  >", "html");
     Test::Lexer::testDoctype("<!DOCTYPE html  >", "html");
@@ -32,7 +32,9 @@ void testDoctypes()
     Test::Lexer::testDoctype("<!DOCTYPE    HTML>", "HTML");
     Test::Lexer::testDoctype("<!doctype   html  >", "html");
     Test::Lexer::testDoctype("<!DOCTYPE   html  >", "html");
-    Test::Lexer::testDoctype("<!DOCTYPE   HTML  >", "HTML"); */
+    Test::Lexer::testDoctype("<!DOCTYPE   HTML  >", "HTML");
+    Test::Lexer::testNotDoctype();
+    Test::Lexer::testNotEndingDoctype();
 }
 
 void testComments()

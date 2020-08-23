@@ -8,6 +8,8 @@
 namespace Test {
     namespace Lexer {
         void testDoctype(const std::string &html, const std::string &expectedDoctype);
+        void testNotDoctype();
+        void testNotEndingDoctype();
     }
 }
 

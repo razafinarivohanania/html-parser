@@ -20,12 +20,64 @@ namespace Test
 
             HtmlToken *expectedToken = new HtmlToken(TokenType::DOCTYPE, expectedDoctype);
             HtmlToken *actualToken = doctypeLexer.getToken();
-            if (Test::Lexer::testToken(expectedToken, actualToken)) {
-                std::cout << "Test success" << std::endl << std::endl;
+            if (Test::Lexer::testToken(expectedToken, actualToken))
+            {
+                std::cout << "Test success" << std::endl
+                          << std::endl;
             }
 
             delete expectedToken;
             delete actualToken;
+        }
+
+        void testNotDoctype()
+        {
+            std::cout << "Test not doctype ..." << std::endl;
+
+            std::string html = "<span>Not doctype</span>";
+            HtmlCursor htmlCursor(html);
+            DoctypeLexer doctypeLexer(htmlCursor);
+
+            if (!doctypeLexer.isSuccess())
+            {
+                std::cout << "Test success" << std::endl
+                          << std::endl;
+                return;
+            }
+
+            std::cout << "Not doctype expected" << std::endl
+                      << std::endl;
+
+            HtmlToken *actualToken = doctypeLexer.getToken();
+            if (actualToken != nullptr)
+            {
+                delete actualToken;
+            }
+        }
+
+        void testNotEndingDoctype()
+        {
+            std::cout << "Test not ending doctype  ..." << std::endl;
+
+            std::string html = "<!doctype html";
+            HtmlCursor htmlCursor(html);
+            DoctypeLexer doctypeLexer(htmlCursor);
+
+            if (!doctypeLexer.isSuccess())
+            {
+                std::cout << "Test success" << std::endl
+                          << std::endl;
+                return;
+            }
+
+            std::cout << "Not ending doctype expected" << std::endl
+                      << std::endl;
+
+            HtmlToken *actualToken = doctypeLexer.getToken();
+            if (actualToken != nullptr)
+            {
+                delete actualToken;
+            }
         }
     } // namespace Lexer
 } // namespace Test
