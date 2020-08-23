@@ -82,10 +82,14 @@ void TagLexer::process()
     if (htmlCursor.isRightArrowCharacter())
     {
         htmlCursor.advance();
-    } else {
-        htmlCursor.skipSpacesFamily();
+
+        success = true;
+        HtmlToken *htmlToken = new HtmlToken(endTag ? TokenType::END_TAG : TokenType::BEGIN_TAG, tagName.content);
+        tokens.push_back(htmlToken);
+        return;
     }
 
+    htmlCursor.skipSpacesFamily();
     AttributeLexer attributeLexer(htmlCursor);
     if (!attributeLexer.isSuccess())
     {
