@@ -21,7 +21,7 @@ namespace Test
 
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
-            Test::Lexer::freeMemories(expectedTokens, actualTokens);
+            Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
         }
 
         void testOneAttributeWithoutValue()
@@ -42,7 +42,7 @@ namespace Test
 
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
-            Test::Lexer::freeMemories(expectedTokens, actualTokens);
+            Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
         }
 
         void testTwoAttributesWithoutValues()
@@ -64,7 +64,7 @@ namespace Test
 
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
-            Test::Lexer::freeMemories(expectedTokens, actualTokens);
+            Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
         }
 
         void testAttributeWithValueUsingQuote()
@@ -86,7 +86,7 @@ namespace Test
 
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
-            Test::Lexer::freeMemories(expectedTokens, actualTokens);
+            Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
         }
 
         void testTwoAttributesWithValuesUsingQuote()
@@ -110,7 +110,7 @@ namespace Test
 
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
-            Test::Lexer::freeMemories(expectedTokens, actualTokens);
+            Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
         }
 
         void testAttributeWithValueUsingDoubleQuote()
@@ -132,7 +132,7 @@ namespace Test
 
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
-            Test::Lexer::freeMemories(expectedTokens, actualTokens);
+            Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
         }
 
         void testTwoAttributesWithValuesUsingDoubleQuote()
@@ -156,7 +156,7 @@ namespace Test
 
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
-            Test::Lexer::freeMemories(expectedTokens, actualTokens);
+            Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
         }
 
         void testTwoAttributesWithValuesUsingQuoteAndDoubleQuote()
@@ -180,7 +180,7 @@ namespace Test
 
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
-            Test::Lexer::freeMemories(expectedTokens, actualTokens);
+            Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
         }
 
         void testTwoAttributesWithValuesUsingDoubleQuoteAndQuote()
@@ -204,7 +204,7 @@ namespace Test
 
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
-            Test::Lexer::freeMemories(expectedTokens, actualTokens);
+            Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
         }
 
         void testThreeAttributesWithValuesAndWithoutValueUsingQuoteAndDoubleQuote()
@@ -229,7 +229,7 @@ namespace Test
 
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
-            Test::Lexer::freeMemories(expectedTokens, actualTokens);
+            Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
         }
     } // namespace Lexer
 

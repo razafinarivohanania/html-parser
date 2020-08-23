@@ -8,7 +8,7 @@
 
 namespace Test {
     namespace Lexer {
-        void testLowerCaseDoctype();
+        void testDoctype();
     }
 }
 

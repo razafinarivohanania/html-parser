@@ -19,7 +19,7 @@ void testAttributes()
 
 void testTags()
 {
-    Test::Lexer::testLowerCaseDoctype();
+    Test::Lexer::testDoctype();
 }
 
 int main()
