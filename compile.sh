@@ -3,10 +3,12 @@ rm ./html-parser
 g++ -std=c++11 \
 -Wall \
 main.cpp \
+src/lexer/DoctypeLexer.cpp \
+src/lexer/DoctypeLexer.h \
+src/lexer/CommentLexer.cpp \
+src/lexer/CommentLexer.h \
 src/lexer/HtmlCursor.cpp \
 src/lexer/HtmlCursor.h \
-src/lexer/Lexer.cpp \
-src/lexer/Lexer.h \
 src/lexer/HtmlLexer.cpp \
 src/lexer/HtmlLexer.h \
 src/lexer/HtmlToken.cpp \

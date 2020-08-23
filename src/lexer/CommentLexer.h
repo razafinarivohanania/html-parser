@@ -2,8 +2,8 @@
 #define COMMENT_LEXER_H
 
 #include <vector>
-#include "Lexer.h"
 #include "HtmlCursor.h"
+#include "HtmlToken.h"
 
 class CommentLexer
 {

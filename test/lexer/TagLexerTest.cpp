@@ -8,9 +8,9 @@ static void testStringDoctype(const std::string &html, const std::string &expect
     HtmlCursor htmlCursor(doctype);
     TagLexer tagLexer(htmlCursor);
 
-    if (tagLexer.hasError())
+    if (!tagLexer.isSuccess())
     {
-        std::cout << "ERROR : " << tagLexer.getError() << std::endl;
+        std::cout << "ERROR : Retrieving tag failed";
     }
 
     std::vector<HtmlToken *> expectedTokens;

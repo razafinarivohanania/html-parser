@@ -5,7 +5,6 @@
 #include <vector>
 #include <iostream>
 
-#include "Lexer.h"
 #include "HtmlCursor.h"
 #include "HtmlToken.h"
 #include "Result.h"

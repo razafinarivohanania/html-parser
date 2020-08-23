@@ -12,9 +12,9 @@ namespace Test
             HtmlCursor htmlCursor(html);
             AttributeLexer attributeLexer(htmlCursor);
 
-            if (attributeLexer.hasError())
+            if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : Retrieving attribute failed";
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -32,9 +32,9 @@ namespace Test
             HtmlCursor htmlCursor(attribute);
             AttributeLexer attributeLexer(htmlCursor);
 
-            if (attributeLexer.hasError())
+            if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : Retrieving attribute failed";
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -53,9 +53,9 @@ namespace Test
             HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
-            if (attributeLexer.hasError())
+            if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : Retrieving attribute failed";
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -75,9 +75,9 @@ namespace Test
             HtmlCursor htmlCursor(attribute);
             AttributeLexer attributeLexer(htmlCursor);
 
-            if (attributeLexer.hasError())
+            if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : Retrieving attribute failed";
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -97,9 +97,9 @@ namespace Test
             HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
-            if (attributeLexer.hasError())
+            if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : Retrieving attribute failed";
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -121,9 +121,9 @@ namespace Test
             HtmlCursor htmlCursor(attribute);
             AttributeLexer attributeLexer(htmlCursor);
 
-            if (attributeLexer.hasError())
+            if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : Retrieving attribute failed";
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -143,9 +143,9 @@ namespace Test
             HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
-            if (attributeLexer.hasError())
+            if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : Retrieving attribute failed";
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -167,9 +167,9 @@ namespace Test
             HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
-            if (attributeLexer.hasError())
+            if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : Retrieving attribute failed";
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -191,9 +191,9 @@ namespace Test
             HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
-            if (attributeLexer.hasError())
+            if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : Retrieving attribute failed";
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -215,9 +215,9 @@ namespace Test
             HtmlCursor htmlCursor(attributes);
             AttributeLexer attributeLexer(htmlCursor);
 
-            if (attributeLexer.hasError())
+            if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : " << attributeLexer.getError() << std::endl;
+                std::cout << "ERROR : Retrieving attribute failed";
             }
 
             std::vector<HtmlToken *> expectedTokens;
