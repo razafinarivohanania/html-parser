@@ -9,8 +9,8 @@ namespace Test
             std::cout << "Test " << html << " ..." << std::endl;
 
             std::string doctype = html;
-            HtmlCursor htmlCursor(doctype);
-            DoctypeLexer doctypeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&doctype);
+            DoctypeLexer doctypeLexer(&htmlCursor);
 
             if (!doctypeLexer.isSuccess())
             {
@@ -35,8 +35,8 @@ namespace Test
             std::cout << "Test not doctype ..." << std::endl;
 
             std::string html = "<span>Not doctype</span>";
-            HtmlCursor htmlCursor(html);
-            DoctypeLexer doctypeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&html);
+            DoctypeLexer doctypeLexer(&htmlCursor);
 
             if (!doctypeLexer.isSuccess())
             {
@@ -60,8 +60,8 @@ namespace Test
             std::cout << "Test not ending doctype  ..." << std::endl;
 
             std::string html = "<!doctype html";
-            HtmlCursor htmlCursor(html);
-            DoctypeLexer doctypeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&html);
+            DoctypeLexer doctypeLexer(&htmlCursor);
 
             if (!doctypeLexer.isSuccess())
             {

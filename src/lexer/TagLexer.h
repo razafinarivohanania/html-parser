@@ -11,7 +11,7 @@
 class TagLexer
 {
 public:
-    TagLexer(HtmlCursor &htmlCursor);
+    TagLexer(HtmlCursor *htmlCursor);
     std::vector<HtmlToken *> getTokens();
     bool isSuccess();
     int getInitialPosition();
@@ -20,7 +20,7 @@ private:
     const std::string INVALID_BEGIN_CHARACTER_TAG = ".-\\/!|<>=\"'"; // TODO to complet
     const std::string INVALID_MIDDLE_CHARACTER_TAG = "\\/!|<>=\"'";  // TODO to complete
 
-    HtmlCursor htmlCursor;
+    HtmlCursor *htmlCursor;
     std::vector<HtmlToken *> tokens;
     bool success;
     int initialPosition;

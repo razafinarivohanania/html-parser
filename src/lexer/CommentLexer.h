@@ -8,14 +8,14 @@
 class CommentLexer
 {
 public:
-    CommentLexer(HtmlCursor &htmlCursor);
+    CommentLexer(HtmlCursor *htmlCursor);
     bool isBeginTagFound();
     bool isCommentFound();
     HtmlToken* getToken();
 
 private:
     HtmlToken *token;
-    HtmlCursor htmlCursor;
+    HtmlCursor *htmlCursor;
     bool beginTagFound;
     bool commentFound;
 

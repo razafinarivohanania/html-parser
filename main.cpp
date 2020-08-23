@@ -49,6 +49,8 @@ void testComments()
 void testTags()
 {
     Test::Lexer::testBeginTag();
+    Test::Lexer::testBeginTagWithAttribute();
+
     Test::Lexer::testOrphanTag();
     Test::Lexer::testEndTag();
 }
@@ -56,8 +58,8 @@ void testTags()
 int main()
 {
     testTags();
-    //testComments();
-    // testDoctypes();
-    //testAttributes();
-    //testTags();
+    testComments();
+    testDoctypes();
+    testAttributes();
+    testTags();
 }

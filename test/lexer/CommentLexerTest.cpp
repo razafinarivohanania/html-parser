@@ -9,8 +9,8 @@ namespace Test
             std::cout << "Test empty comment ..." << std::endl;
 
             std::string html = "<!---->";
-            HtmlCursor htmlCursor(html);
-            CommentLexer commentLexer(htmlCursor);
+            HtmlCursor htmlCursor(&html);
+            CommentLexer commentLexer(&htmlCursor);
 
             if (!commentLexer.isCommentFound())
             {
@@ -35,8 +35,8 @@ namespace Test
             std::cout << "Test not empty comment ..." << std::endl;
 
             std::string html = "<!-- Comment -->";
-            HtmlCursor htmlCursor(html);
-            CommentLexer commentLexer(htmlCursor);
+            HtmlCursor htmlCursor(&html);
+            CommentLexer commentLexer(&htmlCursor);
 
             if (!commentLexer.isCommentFound())
             {
@@ -62,8 +62,8 @@ namespace Test
             std::cout << "Test not comment ..." << std::endl;
 
             std::string html = "<span>Not comment</span>";
-            HtmlCursor htmlCursor(html);
-            CommentLexer commentLexer(htmlCursor);
+            HtmlCursor htmlCursor(&html);
+            CommentLexer commentLexer(&htmlCursor);
 
             if (!commentLexer.isCommentFound())
             {
@@ -88,8 +88,8 @@ namespace Test
             std::cout << "Test not ending comment ..." << std::endl;
 
             std::string html = "<!-- Not ending comment";
-            HtmlCursor htmlCursor(html);
-            CommentLexer commentLexer(htmlCursor);
+            HtmlCursor htmlCursor(&html);
+            CommentLexer commentLexer(&htmlCursor);
 
             if (!commentLexer.isCommentFound())
             {

@@ -1,8 +1,8 @@
 #include "TagLexer.h"
 
-TagLexer::TagLexer(HtmlCursor &htmlCursor) : htmlCursor(htmlCursor)
+TagLexer::TagLexer(HtmlCursor *htmlCursor) : htmlCursor(htmlCursor)
 {
-    initialPosition = htmlCursor.getPosition();
+    initialPosition = htmlCursor->getPosition();
     success = false;
     process();
 }
@@ -30,19 +30,19 @@ std::vector<HtmlToken *> TagLexer::getTokens()
  **/
 void TagLexer::process()
 {
-    if (htmlCursor.endReached())
+    if (htmlCursor->endReached())
     {
         return;
     }
 
-    if (!htmlCursor.isLeftArrowCharacter())
+    if (!htmlCursor->isLeftArrowCharacter())
     {
         return;
     }
 
-    htmlCursor.advance();
+    htmlCursor->advance();
 
-    if (htmlCursor.isSlashCharacter())
+    if (htmlCursor->isSlashCharacter())
     {
         getEndTag();
     }
@@ -54,53 +54,53 @@ void TagLexer::process()
 
 void TagLexer::getEndTag()
 {
-    htmlCursor.advance();
-    Result tagName = htmlCursor.getStringBeforeFirstCharacterFound(" >");
+    htmlCursor->advance();
+    Result tagName = htmlCursor->getStringBeforeFirstCharacterFound(" >");
     if (!tagName.success || !isValidTagName(tagName.content))
     {
         return;
     }
 
-    htmlCursor.skipBlocs(tagName.content.size());
+    htmlCursor->skipBlocs(tagName.content.size());
 
-    if (htmlCursor.isSpaceCharacterFamily())
+    if (htmlCursor->isSpaceCharacterFamily())
     {
-        htmlCursor.skipSpacesFamily();
+        htmlCursor->skipSpacesFamily();
     }
 
-    if (!htmlCursor.isRightArrowCharacter())
+    if (!htmlCursor->isRightArrowCharacter())
     {
         return;
     }
 
-    htmlCursor.advance();
+    htmlCursor->advance();
     success = true;
     tokens.push_back(new HtmlToken(TokenType::END_TAG, tagName.content));
 }
 
 void TagLexer::getBeginOrOrphanTag()
 {
-    Result tagName = htmlCursor.getStringBeforeFirstCharacterFound(" />");
+    Result tagName = htmlCursor->getStringBeforeFirstCharacterFound(" />");
     if (!tagName.success || !isValidTagName(tagName.content))
     {
         return;
     }
 
-    htmlCursor.skipBlocs(tagName.content.size());
+    htmlCursor->skipBlocs(tagName.content.size());
 
-    if (htmlCursor.isSpaceCharacterFamily())
+    if (htmlCursor->isSpaceCharacterFamily())
     {
-        htmlCursor.skipSpacesFamily();
+        htmlCursor->skipSpacesFamily();
     }
 
-    if (htmlCursor.isSlashCharacter())
+    if (htmlCursor->isSlashCharacter())
     {
         std::vector<HtmlToken *> tokens;
         getOrphanTag(tagName.content, tokens);
         return;
     }
 
-    if (htmlCursor.isRightArrowCharacter())
+    if (htmlCursor->isRightArrowCharacter())
     {
         std::vector<HtmlToken *> tokens;
         getBeginTag(tagName.content, tokens);
@@ -113,13 +113,13 @@ void TagLexer::getBeginOrOrphanTag()
         return;
     }
 
-    if (htmlCursor.isSlashCharacter())
+    if (htmlCursor->isSlashCharacter())
     {
         getOrphanTag(tagName.content, attributeLexer.getTokens());
         return;
     }
 
-    if (htmlCursor.isRightArrowCharacter())
+    if (htmlCursor->isRightArrowCharacter())
     {
         getBeginTag(tagName.content, attributeLexer.getTokens());
     }
@@ -127,14 +127,14 @@ void TagLexer::getBeginOrOrphanTag()
 
 void TagLexer::getOrphanTag(const std::string &tagName, std::vector<HtmlToken *> tokens)
 {
-    htmlCursor.advance();
+    htmlCursor->advance();
 
-    if (!htmlCursor.isRightArrowCharacter())
+    if (!htmlCursor->isRightArrowCharacter())
     {
         return;
     }
 
-    htmlCursor.advance();
+    htmlCursor->advance();
     success = true;
     this->tokens.push_back(new HtmlToken(TokenType::ORPHAN_TAG, tagName));
 
@@ -146,7 +146,7 @@ void TagLexer::getOrphanTag(const std::string &tagName, std::vector<HtmlToken *>
 
 void TagLexer::getBeginTag(const std::string &tagName, std::vector<HtmlToken *> tokens)
 {
-    htmlCursor.advance();
+    htmlCursor->advance();
     success = true;
     this->tokens.push_back(new HtmlToken(TokenType::BEGIN_TAG, tagName));
 

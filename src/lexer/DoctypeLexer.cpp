@@ -1,10 +1,10 @@
 #include "DoctypeLexer.h"
 
-DoctypeLexer::DoctypeLexer(HtmlCursor &htmlCursor) : htmlCursor(htmlCursor)
+DoctypeLexer::DoctypeLexer(HtmlCursor *htmlCursor) : htmlCursor(htmlCursor)
 {
     token = nullptr;
     success = false;
-    initalPosition = htmlCursor.getPosition();
+    initalPosition = htmlCursor->getPosition();
     process();
 }
 
@@ -26,28 +26,28 @@ int DoctypeLexer::getInitialPosition()
 void DoctypeLexer::process()
 {
     std::string doctype = "<!DOCTYPE";
-    if (!htmlCursor.startsWith(doctype, true))
+    if (!htmlCursor->startsWith(doctype, true))
     {
         return;
     }
 
-    htmlCursor.skipBlocs(doctype.size());
-    htmlCursor.skipSpacesFamily();
-    Result result = htmlCursor.getStringStarting("html", true);
+    htmlCursor->skipBlocs(doctype.size());
+    htmlCursor->skipSpacesFamily();
+    Result result = htmlCursor->getStringStarting("html", true);
     if (!result.success)
     {
         return;
     }
 
     std::string html = result.content;
-    htmlCursor.skipBlocs(html.size());
-    htmlCursor.skipSpacesFamily();
-    if (!htmlCursor.isRightArrowCharacter())
+    htmlCursor->skipBlocs(html.size());
+    htmlCursor->skipSpacesFamily();
+    if (!htmlCursor->isRightArrowCharacter())
     {
         return;
     }
 
     success = true;
-    htmlCursor.advance();
+    htmlCursor->advance();
     token = new HtmlToken(TokenType::DOCTYPE, html);
 }

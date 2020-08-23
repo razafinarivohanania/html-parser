@@ -1,7 +1,8 @@
 #include "HtmlLexer.h"
 
-HtmlLexer::HtmlLexer(std::string &html) : htmlCursor(html)
+HtmlLexer::HtmlLexer(std::string *html)
 {
+    htmlCursor = new HtmlCursor(html);
     process();
 }
 
@@ -12,7 +13,7 @@ std::vector<HtmlToken *> HtmlLexer::getTokens()
 
 void HtmlLexer::process()
 {
-    if (htmlCursor.endReached())
+    if (htmlCursor->endReached())
     {
         return;
     }
@@ -61,12 +62,12 @@ void HtmlLexer::process()
 
 std::string HtmlLexer::getText()
 {
-    Result text = htmlCursor.getStringBefore("<");
+    Result text = htmlCursor->getStringBefore("<");
     if (text.success)
     {
-        htmlCursor.advance();
+        htmlCursor->advance();
         return text.content;
     }
 
-    return htmlCursor.getRestContent();
+    return htmlCursor->getRestContent();
 }

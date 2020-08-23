@@ -7,13 +7,13 @@
 class DoctypeLexer
 {
 public:
-    DoctypeLexer(HtmlCursor &htmlCursor);
+    DoctypeLexer(HtmlCursor *htmlCursor);
     HtmlToken *getToken();
     int getInitialPosition();
     bool isSuccess();
 
 private:
-    HtmlCursor htmlCursor;
+    HtmlCursor *htmlCursor;
     int initalPosition;
     bool success;
     HtmlToken *token;

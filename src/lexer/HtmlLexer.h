@@ -12,12 +12,12 @@
 class HtmlLexer
 {
 public:
-    HtmlLexer(std::string &html);
+    HtmlLexer(std::string *html);
     std::vector<HtmlToken *> getTokens();
 
 private:
     std::vector<HtmlToken *> tokens;
-    HtmlCursor htmlCursor;
+    HtmlCursor *htmlCursor;
 
     void process();
     std::string getText();

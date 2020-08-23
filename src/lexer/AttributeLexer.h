@@ -12,12 +12,12 @@
 class AttributeLexer
 {
 public:
-    explicit AttributeLexer(HtmlCursor &htmlCursor);
+    explicit AttributeLexer(HtmlCursor *htmlCursor);
     virtual std::vector<HtmlToken *> getTokens();
     bool isSuccess();
 
 private:
-    HtmlCursor htmlCursor;
+    HtmlCursor *htmlCursor;
     bool success;
     std::vector<HtmlToken *> tokens;
 

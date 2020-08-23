@@ -1,6 +1,6 @@
 #include "AttributeLexer.h"
 
-AttributeLexer::AttributeLexer(HtmlCursor &htmlCursor) : htmlCursor(htmlCursor)
+AttributeLexer::AttributeLexer(HtmlCursor *htmlCursor) : htmlCursor(htmlCursor)
 {
     success = false;
     process();
@@ -13,7 +13,7 @@ bool AttributeLexer::isSuccess()
 
 void AttributeLexer::process()
 {
-    if (htmlCursor.endReached() || htmlCursor.isOneOfCharacters("/>"))
+    if (htmlCursor->endReached() || htmlCursor->isOneOfCharacters("/>"))
     {
         success = true;
         return;
@@ -25,18 +25,18 @@ void AttributeLexer::process()
         return;
     }
 
-    htmlCursor.skipSpacesFamily();
+    htmlCursor->skipSpacesFamily();
 
-    if (htmlCursor.isEqualsCharacter())
+    if (htmlCursor->isEqualsCharacter())
     {
-        htmlCursor.skipSpacesFamily();
+        htmlCursor->skipSpacesFamily();
 
-        if (!htmlCursor.advance())
+        if (!htmlCursor->advance())
         {
             return;
         }
 
-        htmlCursor.skipSpacesFamily();
+        htmlCursor->skipSpacesFamily();
 
         Result attributeValue = getAttributeValue();
         if (!attributeValue.success)
@@ -56,7 +56,7 @@ void AttributeLexer::process()
         tokens.push_back(token);
     }
 
-    htmlCursor.skipSpacesFamily();
+    htmlCursor->skipSpacesFamily();
 
     // Retrieve other attribute name and value
     process();
@@ -70,28 +70,28 @@ Result AttributeLexer::getAttributeName()
     result.success = false;
     result.content = "";
 
-    if (StringUtils::containsCharacter(INVALID_ATTRIBUTE_NAME_CHARACTERS, htmlCursor.getCharacter()))
+    if (StringUtils::containsCharacter(INVALID_ATTRIBUTE_NAME_CHARACTERS, htmlCursor->getCharacter()))
     {
         return result;
     }
 
-    attributeName.push_back(htmlCursor.getCharacter());
+    attributeName.push_back(htmlCursor->getCharacter());
 
     while (true)
     {
-        if (!htmlCursor.advance() || htmlCursor.isOneOfCharacters("= />"))
+        if (!htmlCursor->advance() || htmlCursor->isOneOfCharacters("= />"))
         {
             result.success = true;
             result.content = attributeName;
             return result;
         }
 
-        if (StringUtils::containsCharacter(INVALID_ATTRIBUTE_NAME_CHARACTERS, htmlCursor.getCharacter()))
+        if (StringUtils::containsCharacter(INVALID_ATTRIBUTE_NAME_CHARACTERS, htmlCursor->getCharacter()))
         {
             return result;
         }
 
-        attributeName.push_back(htmlCursor.getCharacter());
+        attributeName.push_back(htmlCursor->getCharacter());
     }
 }
 
@@ -106,15 +106,15 @@ Result AttributeLexer::getAttributeName()
  * */
 Result AttributeLexer::getAttributeValue()
 {
-    bool isQuote = htmlCursor.isQuote();
-    if (isQuote || htmlCursor.isDoubleQuote())
+    bool isQuote = htmlCursor->isQuote();
+    if (isQuote || htmlCursor->isDoubleQuote())
     {
-        htmlCursor.advance();
-        Result result = htmlCursor.getStringBefore(isQuote ? "'" : "\"");
+        htmlCursor->advance();
+        Result result = htmlCursor->getStringBefore(isQuote ? "'" : "\"");
         if (result.success)
         {
-            htmlCursor.skipBlocs(result.content.size() + 1);
-            htmlCursor.skipSpacesFamily();
+            htmlCursor->skipBlocs(result.content.size() + 1);
+            htmlCursor->skipSpacesFamily();
             return result;
         }
     }

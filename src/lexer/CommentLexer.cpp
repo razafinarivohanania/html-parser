@@ -1,6 +1,6 @@
 #include "CommentLexer.h"
 
-CommentLexer::CommentLexer(HtmlCursor &htmlCursor) : htmlCursor(htmlCursor)
+CommentLexer::CommentLexer(HtmlCursor *htmlCursor) : htmlCursor(htmlCursor)
 {
     token = nullptr;
     beginTagFound = false;
@@ -36,16 +36,16 @@ HtmlToken *CommentLexer::getToken()
 void CommentLexer::process()
 {
     std::string beginComment = "<!--";
-    if (!htmlCursor.startsWith(beginComment, false))
+    if (!htmlCursor->startsWith(beginComment, false))
     {
         return;
     }
 
     beginTagFound = true;
-    htmlCursor.skipBlocs(beginComment.size());
+    htmlCursor->skipBlocs(beginComment.size());
 
     std::string endComment = "-->";
-    Result result = htmlCursor.getStringBefore(endComment);
+    Result result = htmlCursor->getStringBefore(endComment);
     if (!result.success)
     {
         return;
@@ -53,6 +53,6 @@ void CommentLexer::process()
 
     commentFound = true;
     std::string comment = result.content;
-    htmlCursor.skipBlocs(comment.size() + endComment.size());
+    htmlCursor->skipBlocs(comment.size() + endComment.size());
     token = new HtmlToken(TokenType::COMMENT, comment);
 }

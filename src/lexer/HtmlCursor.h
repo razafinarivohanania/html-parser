@@ -10,9 +10,9 @@
 class HtmlCursor
 {
 public:
-    HtmlCursor(std::string &html);
+    HtmlCursor(std::string *html);
 
-    void resetHtml(std::string &html);
+    void resetHtml(std::string *html);
 
     int getHtmlSize();
     int getPosition();
@@ -46,8 +46,9 @@ public:
     bool advance();
     void skipSpacesFamily();
     std::string getPositionAsString();
+
 private:
-    std::string html;
+    std::string *html;
     int htmlSize;
     int position;
     int line;

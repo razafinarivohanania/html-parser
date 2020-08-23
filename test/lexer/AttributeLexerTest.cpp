@@ -9,8 +9,8 @@ namespace Test
             std::cout << "Test no attribute ..." << std::endl;
 
             std::string html = "";
-            HtmlCursor htmlCursor(html);
-            AttributeLexer attributeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&html);
+            AttributeLexer attributeLexer(&htmlCursor);
 
             if (!attributeLexer.isSuccess())
             {
@@ -30,8 +30,8 @@ namespace Test
             std::cout << "Test one attribute with one value ..." << std::endl;
 
             std::string attribute = "checked";
-            HtmlCursor htmlCursor(attribute);
-            AttributeLexer attributeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&attribute);
+            AttributeLexer attributeLexer(&htmlCursor);
 
             if (!attributeLexer.isSuccess())
             {
@@ -52,8 +52,8 @@ namespace Test
             std::cout << "Test two attributes without values ..." << std::endl;
 
             std::string attributes = "checked fullWidth";
-            HtmlCursor htmlCursor(attributes);
-            AttributeLexer attributeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&attributes);
+            AttributeLexer attributeLexer(&htmlCursor);
 
             if (!attributeLexer.isSuccess())
             {
@@ -75,8 +75,8 @@ namespace Test
             std::cout << "Test attribute with value using quote ..." << std::endl;
 
             std::string attribute = "class='content'";
-            HtmlCursor htmlCursor(attribute);
-            AttributeLexer attributeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&attribute);
+            AttributeLexer attributeLexer(&htmlCursor);
 
             if (!attributeLexer.isSuccess())
             {
@@ -98,8 +98,8 @@ namespace Test
             std::cout << "Test two attributes with values using quote ..." << std::endl;
 
             std::string attributes = "id='main' class='content'";
-            HtmlCursor htmlCursor(attributes);
-            AttributeLexer attributeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&attributes);
+            AttributeLexer attributeLexer(&htmlCursor);
 
             if (!attributeLexer.isSuccess())
             {
@@ -123,8 +123,8 @@ namespace Test
             std::cout << "Test attribute with value using double quote ..." << std::endl;
 
             std::string attribute = "class=\"content\"";
-            HtmlCursor htmlCursor(attribute);
-            AttributeLexer attributeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&attribute);
+            AttributeLexer attributeLexer(&htmlCursor);
 
             if (!attributeLexer.isSuccess())
             {
@@ -146,8 +146,8 @@ namespace Test
             std::cout << "Test two attributes with values using double quote ..." << std::endl;
 
             std::string attributes = "id=\"main\" class=\"content\"";
-            HtmlCursor htmlCursor(attributes);
-            AttributeLexer attributeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&attributes);
+            AttributeLexer attributeLexer(&htmlCursor);
 
             if (!attributeLexer.isSuccess())
             {
@@ -171,8 +171,8 @@ namespace Test
             std::cout << "Test two attributes with values quote and double quote ..." << std::endl;
 
             std::string attributes = "id=\'main\' class=\"content\"";
-            HtmlCursor htmlCursor(attributes);
-            AttributeLexer attributeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&attributes);
+            AttributeLexer attributeLexer(&htmlCursor);
 
             if (!attributeLexer.isSuccess())
             {
@@ -196,8 +196,8 @@ namespace Test
             std::cout << "Test two attributes with values using double quote and quote ..." << std::endl;
 
             std::string attributes = "id=\"main\" class=\'content\'";
-            HtmlCursor htmlCursor(attributes);
-            AttributeLexer attributeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&attributes);
+            AttributeLexer attributeLexer(&htmlCursor);
 
             if (!attributeLexer.isSuccess())
             {
@@ -221,8 +221,8 @@ namespace Test
             std::cout << "Test three attributes with values and without value using quote and double quote ..." << std::endl;
 
             std::string attributes = "id=\"main\" class=\'content\' checked";
-            HtmlCursor htmlCursor(attributes);
-            AttributeLexer attributeLexer(htmlCursor);
+            HtmlCursor htmlCursor(&attributes);
+            AttributeLexer attributeLexer(&htmlCursor);
 
             if (!attributeLexer.isSuccess())
             {
