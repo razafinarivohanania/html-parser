@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "Lexer.h"
 #include "HtmlCursor.h"

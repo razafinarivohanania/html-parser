@@ -19,7 +19,7 @@ std::string HtmlToken::getValue()
 std::string HtmlToken::toString()
 {
     std::string typeAsString = typeToString();
-    return "HtmlToken { type : " + typeAsString + ", value : " + value + "}";
+    return "HtmlToken { type : " + typeAsString + ", value : " + value + " }";
 }
 
 std::string HtmlToken::typeToString()
@@ -34,8 +34,8 @@ std::string HtmlToken::typeToString()
         return "ORPHAN_TAG";
     case END_TAG:
         return "END_TAG";
-    case ATTRIBUTE_NAME:
-        return "ATTRIBUTE_NAME";
+    case ATTRIBUTE_NAME_WITH_VALUE:
+        return "ATTRIBUTE_NAME_WITH_VALUE";
     case ATTRIBUTE_VALUE:
         return "ATTRIBUTE_VALUE";
     case ATTRIBUTE_NAME_WITHOUT_VALUE:

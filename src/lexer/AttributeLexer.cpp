@@ -9,7 +9,8 @@ AttributeLexer::AttributeLexer(HtmlCursor &htmlCursor) : Lexer(htmlCursor)
 void AttributeLexer::process()
 {
     htmlCursor.skipSpacesFamily();
-    if (htmlCursor.endReached()) {
+    if (htmlCursor.endReached())
+    {
         return;
     }
 
@@ -37,7 +38,7 @@ void AttributeLexer::process()
             return;
         }
 
-        HtmlToken *nameToken = new HtmlToken(TokenType::ATTRIBUTE_NAME, attributeName);
+        HtmlToken *nameToken = new HtmlToken(TokenType::ATTRIBUTE_NAME_WITH_VALUE, attributeName);
         HtmlToken *valueToken = new HtmlToken(TokenType::ATTRIBUTE_VALUE, attributeValue);
 
         tokens.push_back(nameToken);
@@ -69,13 +70,11 @@ std::string AttributeLexer::getAttributeName()
 
     while (true)
     {
-        if (!htmlCursor.advance())
-        {
-            setError(HTML_NOT_ENDED_CORRECTLY);
-            return "";
-        }
-
-        if (htmlCursor.isEqualsCharacter() || htmlCursor.isSpaceCharacterFamily() || htmlCursor.isSlashCharacter() || htmlCursor.isRightArrowCharacter())
+        if (!htmlCursor.advance() ||
+            htmlCursor.isEqualsCharacter() ||
+            htmlCursor.isSpaceCharacterFamily() ||
+            htmlCursor.isSlashCharacter() ||
+            htmlCursor.isRightArrowCharacter())
         {
             break;
         }
@@ -85,6 +84,8 @@ std::string AttributeLexer::getAttributeName()
             setError(buildUnexpectedCharacterError());
             return "";
         }
+
+        attributeName.push_back(htmlCursor.getCharacter());
     }
 
     if (attributeName.empty())

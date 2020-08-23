@@ -2,6 +2,7 @@
 #define HTML_CURSOR_H
 
 #include <string>
+#include <iostream>
 
 #include "../utils/StringUtils.h"
 

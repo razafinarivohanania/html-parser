@@ -2,6 +2,8 @@ rm ./html-parser
 
 g++ -std=c++11 \
 -Wall \
+test/lexer/AttributeLexerTest.h \
+test/lexer/AttributeLexerTest.cpp \
 main.cpp \
 src/lexer/HtmlCursor.cpp \
 src/lexer/HtmlCursor.h \
