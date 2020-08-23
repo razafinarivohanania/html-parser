@@ -35,8 +35,7 @@ static bool testToken(HtmlToken *expectedToken, HtmlToken *actualToken, const in
             std::cout << " on [" << index << "] index";
         }
 
-        std::cout << std::endl
-                  << std::endl;
+        std::cout << std::endl;
         return false;
     }
 
@@ -48,8 +47,7 @@ static bool testToken(HtmlToken *expectedToken, HtmlToken *actualToken, const in
             std::cout << " on [" << index << "] index";
         }
 
-        std::cout << std::endl
-                  << std::endl;
+        std::cout << std::endl;
         return false;
     }
 

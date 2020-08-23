@@ -2,14 +2,14 @@
 #define TAG_LEXER_TEST_H
 
 #include <iostream>
-#include "TokenTest.h"
-#include "../../src/lexer/HtmlCursor.h"
+#include <vector>
+
 #include "../../src/lexer/TagLexer.h"
+#include "TokenTest.h"
 
 namespace Test {
     namespace Lexer {
-        void testDoctype();
+        void testBeginTag();
     }
 }
-
 #endif

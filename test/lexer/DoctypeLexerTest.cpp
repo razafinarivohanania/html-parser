@@ -22,12 +22,12 @@ namespace Test
             HtmlToken *actualToken = doctypeLexer.getToken();
             if (Test::Lexer::testToken(expectedToken, actualToken))
             {
-                std::cout << "Test success" << std::endl
-                          << std::endl;
+                std::cout << "Test success" << std::endl;
             }
 
             delete expectedToken;
             delete actualToken;
+            std::cout << std::endl;
         }
 
         void testNotDoctype()
@@ -40,19 +40,19 @@ namespace Test
 
             if (!doctypeLexer.isSuccess())
             {
-                std::cout << "Test success" << std::endl
-                          << std::endl;
+                std::cout << "Test success" << std::endl;
                 return;
             }
 
-            std::cout << "Not doctype expected" << std::endl
-                      << std::endl;
+            std::cout << "Not doctype expected" << std::endl;
 
             HtmlToken *actualToken = doctypeLexer.getToken();
             if (actualToken != nullptr)
             {
                 delete actualToken;
             }
+
+            std::cout << std::endl;
         }
 
         void testNotEndingDoctype()
@@ -65,19 +65,19 @@ namespace Test
 
             if (!doctypeLexer.isSuccess())
             {
-                std::cout << "Test success" << std::endl
-                          << std::endl;
+                std::cout << "Test success" << std::endl;
                 return;
             }
 
-            std::cout << "Not ending doctype expected" << std::endl
-                      << std::endl;
+            std::cout << "Not ending doctype expected" << std::endl;
 
             HtmlToken *actualToken = doctypeLexer.getToken();
             if (actualToken != nullptr)
             {
                 delete actualToken;
             }
+
+            std::cout << std::endl;
         }
     } // namespace Lexer
 } // namespace Test

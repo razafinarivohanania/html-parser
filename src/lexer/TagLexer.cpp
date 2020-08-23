@@ -36,7 +36,7 @@ void TagLexer::process()
         return;
     }
 
-    if (!htmlCursor.isRightArrowCharacter())
+    if (!htmlCursor.isLeftArrowCharacter())
     {
         return;
     }

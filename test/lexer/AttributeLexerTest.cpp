@@ -14,7 +14,7 @@ namespace Test
 
             if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : Retrieving attribute failed";
+                std::cout << "ERROR : Retrieving attribute failed" << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -22,6 +22,7 @@ namespace Test
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
             Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
+            std::cout << std::endl;
         }
 
         void testOneAttributeWithoutValue()
@@ -34,7 +35,7 @@ namespace Test
 
             if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : Retrieving attribute failed";
+                std::cout << "ERROR : Retrieving attribute failed" << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -43,6 +44,7 @@ namespace Test
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
             Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
+            std::cout << std::endl;
         }
 
         void testTwoAttributesWithoutValues()
@@ -55,7 +57,7 @@ namespace Test
 
             if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : Retrieving attribute failed";
+                std::cout << "ERROR : Retrieving attribute failed" << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -65,6 +67,7 @@ namespace Test
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
             Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
+            std::cout << std::endl;
         }
 
         void testAttributeWithValueUsingQuote()
@@ -77,7 +80,7 @@ namespace Test
 
             if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : Retrieving attribute failed";
+                std::cout << "ERROR : Retrieving attribute failed" << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -87,6 +90,7 @@ namespace Test
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
             Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
+            std::cout << std::endl;
         }
 
         void testTwoAttributesWithValuesUsingQuote()
@@ -99,7 +103,7 @@ namespace Test
 
             if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : Retrieving attribute failed";
+                std::cout << "ERROR : Retrieving attribute failed" << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -111,6 +115,7 @@ namespace Test
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
             Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
+            std::cout << std::endl;
         }
 
         void testAttributeWithValueUsingDoubleQuote()
@@ -123,7 +128,7 @@ namespace Test
 
             if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : Retrieving attribute failed";
+                std::cout << "ERROR : Retrieving attribute failed" << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -133,6 +138,7 @@ namespace Test
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
             Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
+            std::cout << std::endl;
         }
 
         void testTwoAttributesWithValuesUsingDoubleQuote()
@@ -145,7 +151,7 @@ namespace Test
 
             if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : Retrieving attribute failed";
+                std::cout << "ERROR : Retrieving attribute failed" << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -157,6 +163,7 @@ namespace Test
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
             Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
+            std::cout << std::endl;
         }
 
         void testTwoAttributesWithValuesUsingQuoteAndDoubleQuote()
@@ -169,7 +176,7 @@ namespace Test
 
             if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : Retrieving attribute failed";
+                std::cout << "ERROR : Retrieving attribute failed" << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -181,6 +188,7 @@ namespace Test
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
             Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
+            std::cout << std::endl;
         }
 
         void testTwoAttributesWithValuesUsingDoubleQuoteAndQuote()
@@ -193,7 +201,7 @@ namespace Test
 
             if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : Retrieving attribute failed";
+                std::cout << "ERROR : Retrieving attribute failed" << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -205,6 +213,7 @@ namespace Test
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
             Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
+            std::cout << std::endl;
         }
 
         void testThreeAttributesWithValuesAndWithoutValueUsingQuoteAndDoubleQuote()
@@ -217,7 +226,7 @@ namespace Test
 
             if (!attributeLexer.isSuccess())
             {
-                std::cout << "ERROR : Retrieving attribute failed";
+                std::cout << "ERROR : Retrieving attribute failed" << std::endl;
             }
 
             std::vector<HtmlToken *> expectedTokens;
@@ -230,6 +239,7 @@ namespace Test
             std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
             Test::Lexer::emptyTokensAndFreeMemories(expectedTokens, actualTokens);
+            std::cout << std::endl;
         }
     } // namespace Lexer
 

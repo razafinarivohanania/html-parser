@@ -5,6 +5,7 @@
 #include "test/lexer/AttributeLexerTest.h"
 #include "test/lexer/TagLexerTest.h"
 #include "test/lexer/DoctypeLexerTest.h"
+#include "test/lexer/TagLexerTest.h"
 
 void testAttributes()
 {
@@ -45,10 +46,16 @@ void testComments()
     Test::Lexer::testNotEndingComment();
 }
 
+void testTags()
+{
+    Test::Lexer::testBeginTag();
+}
+
 int main()
 {
+    testTags();
     //testComments();
-    testDoctypes();
+    // testDoctypes();
     //testAttributes();
     //testTags();
 }

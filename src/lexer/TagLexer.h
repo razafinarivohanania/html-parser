@@ -1,6 +1,7 @@
 #ifndef TAG_LEXER_H
 #define TAG_LEXER_H
 
+#include <iostream>
 #include <vector>
 #include "HtmlCursor.h"
 #include "HtmlToken.h"

@@ -22,12 +22,12 @@ namespace Test
             HtmlToken *actualToken = commentLexer.getToken();
             if (Test::Lexer::testToken(expectedToken, actualToken))
             {
-                std::cout << "Test success" << std::endl
-                          << std::endl;
+                std::cout << "Test success" << std::endl;
             }
 
             delete expectedToken;
             delete actualToken;
+            std::cout << std::endl;
         }
 
         void testNotEmptyComment()
@@ -54,6 +54,7 @@ namespace Test
 
             delete expectedToken;
             delete actualToken;
+            std::cout << std::endl;
         }
 
         void testNotComment()
@@ -78,6 +79,8 @@ namespace Test
             {
                 delete actualToken;
             }
+
+            std::cout << std::endl;
         }
 
         void testNotEndingComment()
@@ -102,6 +105,8 @@ namespace Test
             {
                 delete actualToken;
             }
+
+            std::cout << std::endl;
         }
     } // namespace Lexer
 } // namespace Test
