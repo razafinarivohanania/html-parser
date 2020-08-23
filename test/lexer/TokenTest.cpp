@@ -14,6 +14,14 @@ static void emptyTokensAndFreeMemories(std::vector<HtmlToken *> tokens)
     }
 }
 
+static void printTokens(std::vector<HtmlToken *> tokens)
+{
+    for (auto &token : tokens)
+    {
+        std::cout << token->toString() << std::endl;
+    }
+}
+
 namespace Test
 {
     namespace Lexer
@@ -24,8 +32,10 @@ namespace Test
             size_t expectedSize = expectedTokens.size();
             if (expectedSize != actualTokens.size())
             {
+                printTokens(actualTokens);
                 std::cout << "ERROR : Expected tokens size [" << expectedSize << "] but found [" << actualTokens.size() << "]" << std::endl
                           << std::endl;
+
                 return;
             }
 

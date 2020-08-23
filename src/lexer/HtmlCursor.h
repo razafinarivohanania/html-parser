@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "../utils/StringUtils.h"
+#include "Result.h"
 
 class HtmlCursor
 {
@@ -22,8 +23,9 @@ public:
     char getCharacter(const size_t position);
 
     bool startsWith(const std::string &string, const bool ignoreCase);
-    bool skipIfFound(const std::string &string, const bool ignoreCase);
-    std::string skipAndGetStringFound(const std::string &string, const bool ignoreCase);
+    void skipBlocs(const int sizeBlocs);
+    Result getStringStarting(const std::string &string, const bool ignoreCase);
+    Result getStringBefore(const std::string &string);
 
     bool isLeftArrowCharacter();
     bool isRightArrowCharacter();
@@ -35,6 +37,7 @@ public:
     bool isQuote();
     bool isDoubleQuote();
     bool matchesIgnoreCaseCharacter(char character);
+    bool isOneOfCharacters(const std::string &characters);
 
     bool endReached();
 

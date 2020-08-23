@@ -35,14 +35,14 @@ void AttributeLexer::process()
 
         htmlCursor.skipSpacesFamily();
 
-        std::string attributeValue = getAttributeValue();
-        if (hasError())
+        Result result = getAttributeValue();
+        if (!result.success)
         {
             return;
         }
 
         HtmlToken *nameToken = new HtmlToken(TokenType::ATTRIBUTE_NAME_WITH_VALUE, attributeName);
-        HtmlToken *valueToken = new HtmlToken(TokenType::ATTRIBUTE_VALUE, attributeValue);
+        HtmlToken *valueToken = new HtmlToken(TokenType::ATTRIBUTE_VALUE, result.content);
 
         tokens.push_back(nameToken);
         tokens.push_back(valueToken);
@@ -73,11 +73,7 @@ std::string AttributeLexer::getAttributeName()
 
     while (true)
     {
-        if (!htmlCursor.advance() ||
-            htmlCursor.isEqualsCharacter() ||
-            htmlCursor.isSpaceCharacterFamily() ||
-            htmlCursor.isSlashCharacter() ||
-            htmlCursor.isRightArrowCharacter())
+        if (!htmlCursor.advance() || htmlCursor.isOneOfCharacters("= />"))
         {
             break;
         }
@@ -99,32 +95,34 @@ std::string AttributeLexer::getAttributeName()
     return attributeName;
 }
 
-std::string AttributeLexer::getAttributeValue()
+/**
+ * Treat syntax
+ * ''
+ * 'x'
+ * 'xx'
+ * ""
+ * "x"
+ * "xx"
+ * */
+Result AttributeLexer::getAttributeValue()
 {
     bool isQuote = htmlCursor.isQuote();
-
-    if (!isQuote && !htmlCursor.isDoubleQuote())
+    if (isQuote || htmlCursor.isDoubleQuote())
     {
-        setError(buildUnexpectedCharacterError());
-        return "";
-    }
-
-    std::string attributeValue = "";
-
-    while (true)
-    {
-        if (!htmlCursor.advance())
+        htmlCursor.advance();
+        Result result = htmlCursor.getStringBefore(isQuote ? "'" : "\"");
+        if (result.success)
         {
-            setError(buildUnexpectedCharacterError());
-            return "";
-        }
-
-        if ((htmlCursor.isQuote() && isQuote) || (htmlCursor.isDoubleQuote() && !isQuote))
-        {
-            htmlCursor.advance();
-            return attributeValue;
+            htmlCursor.skipBlocs(result.content.size() + 1);
+            htmlCursor.skipSpacesFamily();
+            return result;
         }
     }
+
+    Result result;
+    result.success = false;
+    result.content = "";
+    return result;
 }
 
 std::vector<HtmlToken *> AttributeLexer::getTokens()

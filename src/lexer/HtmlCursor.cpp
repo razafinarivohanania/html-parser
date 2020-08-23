@@ -78,28 +78,23 @@ bool HtmlCursor::startsWith(const std::string &string,
     return true;
 }
 
-bool HtmlCursor::skipIfFound(const std::string &string,
-                             const bool ignoreCase)
+void HtmlCursor::skipBlocs(const int sizeBlocs)
 {
-    if (!startsWith(string, ignoreCase))
-    {
-        return false;
-    }
-
-    int size = string.size();
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < sizeBlocs; i++)
     {
         advance();
     }
-
-    return true;
 }
 
-std::string HtmlCursor::skipAndGetStringFound(const std::string &string,
-                                              const bool ignoreCase)
+Result HtmlCursor::getStringStarting(const std::string &string,
+                                     const bool ignoreCase)
 {
     int size = string.size();
     std::string stringFound = "";
+
+    Result result;
+    result.success = false;
+    result.content = "";
 
     for (int i = 0; i < size; i++)
     {
@@ -110,9 +105,9 @@ std::string HtmlCursor::skipAndGetStringFound(const std::string &string,
         }
 
         int j = position + i;
-        if (j >= htmlSize - 1)
+        if (j >= htmlSize)
         {
-            return "";
+            return result;
         }
 
         char htmlCharacter = html[j];
@@ -123,19 +118,55 @@ std::string HtmlCursor::skipAndGetStringFound(const std::string &string,
 
         if (character != htmlCharacter)
         {
-            return "";
+            return result;
         }
 
         stringFound.push_back(html[j]);
     }
 
-    size = string.size();
-    for (int i = 0; i < size; i++)
+    result.success = true;
+    result.content = stringFound;
+    return result;
+}
+
+Result HtmlCursor::getStringBefore(const std::string &string)
+{
+    int size = string.size();
+    std::string stringBefore = "";
+
+    Result result;
+    result.success = false;
+    result.content = "";
+
+    for (int i = position; i < htmlSize; i++)
     {
-        advance();
+        bool isFound = true;
+        for (int j = 0; j < size; j++)
+        {
+            int k = i + j;
+            if (k >= htmlSize)
+            {
+                return result;
+            }
+
+            if (html[k] != string[j])
+            {
+                isFound = false;
+                break;
+            }
+        }
+
+        if (isFound)
+        {
+            break;
+        }
+
+        stringBefore.push_back(html[i]);
     }
 
-    return stringFound;
+    result.success = true;
+    result.content = stringBefore;
+    return result;
 }
 
 bool HtmlCursor::isLeftArrowCharacter()
@@ -176,6 +207,17 @@ bool HtmlCursor::isHyphenCharacter()
 bool HtmlCursor::matchesIgnoreCaseCharacter(char character)
 {
     return StringUtils::equalsIgnoreCase(getCharacter(), character);
+}
+
+bool HtmlCursor::isOneOfCharacters(const std::string &characters) {
+    int size = characters.size();
+    for (int i = 0; i < size; i++) {
+        if (getCharacter() == characters[i]) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 bool HtmlCursor::isQuote()

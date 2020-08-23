@@ -24,7 +24,7 @@ private:
 
     void process();
     std::string getAttributeName();
-    std::string getAttributeValue();
+    Result getAttributeValue();
 };
 
 #endif

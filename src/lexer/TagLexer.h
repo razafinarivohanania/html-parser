@@ -21,7 +21,7 @@ private:
     const std::string INVALID_MIDDLE_CHARACTER_TAG = "\\/!|<>=\"'";         //TODO to complete
 
     void process();
-    void getComment();
+    bool getComment();
     bool getDoctype();
     void getEndTag();
     std::string getBeginTagName();

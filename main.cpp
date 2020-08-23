@@ -25,5 +25,5 @@ void testTags()
 int main()
 {
     testAttributes();
-    testTags();
+    //testTags();
 }

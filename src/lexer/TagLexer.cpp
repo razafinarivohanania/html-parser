@@ -7,18 +7,22 @@ TagLexer::TagLexer(HtmlCursor &htmlCursor) : Lexer(htmlCursor)
 
 void TagLexer::process()
 {
-    htmlCursor.skipSpacesFamily();
-
     if (htmlCursor.endReached())
     {
         return;
     }
 
-    if (getDoctype()) {
+    if (getComment())
+    {
         process();
     }
 
-    if (true) {
+    if (getDoctype())
+    {
+        process();
+    }
+
+    if (false) {
         return;
     }
 
@@ -105,50 +109,35 @@ void TagLexer::process()
     //TODO close tag
 }
 
-void TagLexer::getComment()
+/**
+ * Treat following syntaxes :
+ * <!---->
+ * <!-- -->
+ * <!--x-->
+ * <!-- x -->
+ * <!--xx-->
+ * <!-- xx -->
+ **/
+bool TagLexer::getComment()
 {
-    // <!--
-
-    std::string comment = "";
-    while (true)
+    std::string beginComment = "<!--";
+    if (htmlCursor.startsWith(beginComment, false))
     {
-        if (!htmlCursor.advance())
+        htmlCursor.skipBlocs(beginComment.size());
+
+        std::string endComment = "-->";
+        Result result = htmlCursor.getStringBefore(endComment);
+        if (result.success)
         {
-            setError(HTML_NOT_ENDED_CORRECTLY);
-            return;
+            std::string comment = result.content;
+            htmlCursor.skipBlocs(comment.size() + endComment.size());
+            HtmlToken *htmlToken = new HtmlToken(TokenType::COMMENT, comment);
+            tokens.push_back(htmlToken);
+            return true;
         }
-
-        // -
-        if (htmlCursor.isHyphenCharacter())
-        {
-            if (!htmlCursor.advance())
-            {
-                setError(HTML_NOT_ENDED_CORRECTLY);
-                return;
-            }
-
-            // --
-            if (htmlCursor.isHyphenCharacter())
-            {
-                if (!htmlCursor.advance())
-                {
-                    setError(HTML_NOT_ENDED_CORRECTLY);
-                    return;
-                }
-
-                // -->
-                if (htmlCursor.isRightArrowCharacter())
-                {
-                    break;
-                }
-            }
-        }
-
-        comment.push_back(htmlCursor.getCharacter());
     }
 
-    HtmlToken *htmlToken = new HtmlToken(TokenType::COMMENT, comment);
-    tokens.push_back(htmlToken);
+    return false;
 }
 
 /**
@@ -164,15 +153,20 @@ void TagLexer::getComment()
  **/
 bool TagLexer::getDoctype()
 {
-    if (htmlCursor.skipIfFound("<!DOCTYPE", true))
+    std::string doctype = "<!DOCTYPE";
+    if (htmlCursor.startsWith(doctype, true))
     {
+        htmlCursor.skipBlocs(doctype.size());
         htmlCursor.skipSpacesFamily();
-        std::string html = htmlCursor.skipAndGetStringFound("html", true);
-        if (!html.empty())
+        Result result = htmlCursor.getStringStarting("html", true);
+        if (result.success)
         {
+            std::string html = result.content;
+            htmlCursor.skipBlocs(html.size());
             htmlCursor.skipSpacesFamily();
             if (htmlCursor.isRightArrowCharacter())
             {
+                htmlCursor.advance();
                 HtmlToken *htmlToken = new HtmlToken(TokenType::DOCTYPE, html);
                 tokens.push_back(htmlToken);
                 return true;
