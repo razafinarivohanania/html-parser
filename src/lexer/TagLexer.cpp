@@ -95,22 +95,37 @@ void TagLexer::getBeginOrOrphanTag()
 
     if (htmlCursor.isSlashCharacter())
     {
-        getOrphanTag(tagName.content);
+        std::vector<HtmlToken *> tokens;
+        getOrphanTag(tagName.content, tokens);
         return;
     }
 
     if (htmlCursor.isRightArrowCharacter())
     {
-        htmlCursor.advance();
-        success = true;
-        tokens.push_back(new HtmlToken(TokenType::BEGIN_TAG, tagName.content));
+        std::vector<HtmlToken *> tokens;
+        getBeginTag(tagName.content, tokens);
         return;
     }
 
-    //TODO
+    AttributeLexer attributeLexer(htmlCursor);
+    if (!attributeLexer.isSuccess())
+    {
+        return;
+    }
+
+    if (htmlCursor.isSlashCharacter())
+    {
+        getOrphanTag(tagName.content, attributeLexer.getTokens());
+        return;
+    }
+
+    if (htmlCursor.isRightArrowCharacter())
+    {
+        getBeginTag(tagName.content, attributeLexer.getTokens());
+    }
 }
 
-void TagLexer::getOrphanTag(const std::string &tagName)
+void TagLexer::getOrphanTag(const std::string &tagName, std::vector<HtmlToken *> tokens)
 {
     htmlCursor.advance();
 
@@ -121,7 +136,24 @@ void TagLexer::getOrphanTag(const std::string &tagName)
 
     htmlCursor.advance();
     success = true;
-    tokens.push_back(new HtmlToken(TokenType::ORPHAN_TAG, tagName));
+    this->tokens.push_back(new HtmlToken(TokenType::ORPHAN_TAG, tagName));
+
+    for (auto &token : tokens)
+    {
+        this->tokens.push_back(token);
+    }
+}
+
+void TagLexer::getBeginTag(const std::string &tagName, std::vector<HtmlToken *> tokens)
+{
+    htmlCursor.advance();
+    success = true;
+    this->tokens.push_back(new HtmlToken(TokenType::BEGIN_TAG, tagName));
+
+    for (auto &token : tokens)
+    {
+        this->tokens.push_back(token);
+    }
 }
 
 bool TagLexer::isValidTagName(const std::string &tagName)

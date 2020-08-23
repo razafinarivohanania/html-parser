@@ -28,7 +28,8 @@ private:
     void process();
     void getEndTag();
     void getBeginOrOrphanTag();
-    void getOrphanTag(const std::string &tagName);
+    void getOrphanTag(const std::string &tagName, std::vector<HtmlToken *> tokens);
+    void getBeginTag(const std::string &tagName, std::vector<HtmlToken *> tokens);
     bool isValidTagName(const std::string &tagName);
 };
 
