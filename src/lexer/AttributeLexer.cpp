@@ -9,13 +9,8 @@ AttributeLexer::AttributeLexer(HtmlCursor &htmlCursor) : Lexer(htmlCursor)
 void AttributeLexer::process()
 {
     htmlCursor.skipSpacesFamily();
-    if (htmlCursor.endReached())
-    {
-        return;
-    }
 
-    // End tag reached
-    if (htmlCursor.isSlashCharacter() || htmlCursor.isRightArrowCharacter())
+    if (htmlCursor.endReached() || htmlCursor.isSlashCharacter() || htmlCursor.isRightArrowCharacter())
     {
         return;
     }

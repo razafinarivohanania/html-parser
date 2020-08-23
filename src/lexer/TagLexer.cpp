@@ -7,6 +7,12 @@ TagLexer::TagLexer(HtmlCursor &htmlCursor) : Lexer(htmlCursor)
 
 void TagLexer::process()
 {
+    htmlCursor.skipSpacesFamily();
+
+    if (htmlCursor.endReached()) {
+        return;
+    }
+
     // <
     if (!htmlCursor.isLeftArrowCharacter())
     {

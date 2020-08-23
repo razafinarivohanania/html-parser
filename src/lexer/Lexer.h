@@ -16,13 +16,15 @@ public:
 
     bool hasError();
     std::string getError();
+    int getInitialCursorPosition();
 
 protected:
     std::string HTML_NOT_ENDED_CORRECTLY = "HTML not ended correctly";
 
-    void setError(std::string error);
-
     HtmlCursor htmlCursor;
+    int initalCursorPosition;
+
+    void setError(std::string error);
 
     std::string buildUnexpectedCharacterError(char expectedCharacter);
     std::string buildUnexpectedCharacterError();

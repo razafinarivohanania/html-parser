@@ -4,6 +4,25 @@ namespace Test
 {
     namespace Lexer
     {
+        void testNoAttribute()
+        {
+            std::cout << "Test no attribute ..." << std::endl;
+
+            HtmlCursor htmlCursor("");
+            AttributeLexer attributeLexer(htmlCursor);
+
+            if (attributeLexer.hasError())
+            {
+                std::cout << attributeLexer.getError() << std::endl;
+            }
+
+            std::vector<HtmlToken *> expectedTokens;
+
+            std::vector<HtmlToken *> actualTokens = attributeLexer.getTokens();
+            Test::Lexer::testTokens(expectedTokens, actualTokens);
+            Test::Lexer::freeMemories(expectedTokens, actualTokens);
+        }
+
         void testOneAttributeWithoutValue()
         {
             std::cout << "Test one attribute with one value ..." << std::endl;

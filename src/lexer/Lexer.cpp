@@ -2,6 +2,7 @@
 
 Lexer::Lexer(HtmlCursor &htmlCursor) : htmlCursor(htmlCursor)
 {
+    initalCursorPosition = htmlCursor.getPosition();
 }
 
 void Lexer::setError(std::string error)
@@ -17,6 +18,11 @@ bool Lexer::hasError()
 std::string Lexer::getError()
 {
     return error;
+}
+
+int Lexer::getInitialCursorPosition()
+{
+    return initalCursorPosition;
 }
 
 std::string Lexer::buildUnexpectedCharacterError(char expectedCharacter)

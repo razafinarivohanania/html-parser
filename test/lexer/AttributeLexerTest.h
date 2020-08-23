@@ -12,6 +12,7 @@ namespace Test
 {
     namespace Lexer
     {
+        void testNoAttribute();
         void testOneAttributeWithoutValue();
         void testTwoAttributesWithoutValues();
         void testAttributeWithValueUsingQuote();

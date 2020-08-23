@@ -2,9 +2,11 @@
 #include <string>
 
 #include "test/lexer/AttributeLexerTest.h"
+#include "test/lexer/TagLexerTest.h"
 
-int main()
+void testAttributes()
 {
+    Test::Lexer::testNoAttribute();
     Test::Lexer::testOneAttributeWithoutValue();
     Test::Lexer::testTwoAttributesWithoutValues();
     Test::Lexer::testAttributeWithValueUsingQuote();
@@ -13,4 +15,15 @@ int main()
     Test::Lexer::testTwoAttributesWithValuesUsingDoubleQuote();
     Test::Lexer::testTwoAttributesWithValuesUsingQuoteAndDoubleQuote();
     Test::Lexer::testTwoAttributesWithValuesUsingDoubleQuoteAndQuote();
+}
+
+void testTags()
+{
+    Test::Lexer::testLowerCaseDoctype();
+}
+
+int main()
+{
+    testAttributes();
+    testTags();
 }

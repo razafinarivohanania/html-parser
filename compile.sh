@@ -23,6 +23,8 @@ test/lexer/AttributeLexerTest.h \
 test/lexer/AttributeLexerTest.cpp \
 test/lexer/TokenTest.h \
 test/lexer/TokenTest.cpp \
+test/lexer/TagLexerTest.cpp \
+test/lexer/TagLexerTest.h \
 -o html-parser
 
 ./html-parser
