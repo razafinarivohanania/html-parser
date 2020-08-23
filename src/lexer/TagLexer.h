@@ -28,6 +28,7 @@ private:
     void process();
     void getEndTag();
     void getBeginOrOrphanTag();
+    void getOrphanTag(const std::string &tagName);
     bool isValidTagName(const std::string &tagName);
 };
 

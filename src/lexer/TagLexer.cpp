@@ -30,7 +30,6 @@ std::vector<HtmlToken *> TagLexer::getTokens()
  **/
 void TagLexer::process()
 {
-    //TODO
     if (htmlCursor.endReached())
     {
         return;
@@ -81,6 +80,40 @@ void TagLexer::getEndTag()
 
 void TagLexer::getBeginOrOrphanTag()
 {
+    Result tagName = htmlCursor.getStringBeforeFirstCharacterFound(" />");
+    if (!tagName.success || !isValidTagName(tagName.content))
+    {
+        return;
+    }
+
+    htmlCursor.skipBlocs(tagName.content.size());
+
+    if (htmlCursor.isSpaceCharacterFamily())
+    {
+        htmlCursor.skipSpacesFamily();
+    }
+
+    if (htmlCursor.isSlashCharacter())
+    {
+        getOrphanTag(tagName.content);
+        return;
+    }
+
+    //TODO
+}
+
+void TagLexer::getOrphanTag(const std::string &tagName)
+{
+    htmlCursor.advance();
+
+    if (!htmlCursor.isRightArrowCharacter())
+    {
+        return;
+    }
+
+    htmlCursor.advance();
+    success = true;
+    tokens.push_back(new HtmlToken(TokenType::ORPHAN_TAG, tagName));
 }
 
 bool TagLexer::isValidTagName(const std::string &tagName)

@@ -40,7 +40,7 @@ namespace Test
             }
 
             std::vector<HtmlToken *> expectedTokens;
-            expectedTokens.push_back(new HtmlToken(TokenType::BEGIN_TAG, "br"));
+            expectedTokens.push_back(new HtmlToken(TokenType::ORPHAN_TAG, "br"));
 
             std::vector<HtmlToken *> actualTokens = tagLexer.getTokens();
             Test::Lexer::testTokens(expectedTokens, actualTokens);
