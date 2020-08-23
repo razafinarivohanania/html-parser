@@ -27,6 +27,8 @@ public:
     bool isDoubleQuote();
     bool matchesIgnoreCaseCharacter(char character);
 
+    bool endReached();
+
     bool advance();
     void skipSpacesFamily();
     std::string getPositionAsString();

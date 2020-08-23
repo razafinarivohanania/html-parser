@@ -81,7 +81,7 @@ bool HtmlCursor::isDoubleQuote()
 
 bool HtmlCursor::advance()
 {
-    if (position >= htmlSize - 1)
+    if (endReached())
     {
         return false;
     }
@@ -98,6 +98,11 @@ bool HtmlCursor::advance()
 
     position++;
     return true;
+}
+
+bool HtmlCursor::endReached()
+{
+    return position >= htmlSize - 1;
 }
 
 void HtmlCursor::skipSpacesFamily()

@@ -9,29 +9,12 @@ AttributeLexer::AttributeLexer(HtmlCursor &htmlCursor) : Lexer(htmlCursor)
 void AttributeLexer::process()
 {
     htmlCursor.skipSpacesFamily();
-
-    // /
-    if (htmlCursor.isSlashCharacter())
-    {
-        if (!htmlCursor.advance())
-        {
-            setError(HTML_NOT_ENDED_CORRECTLY);
-            return;
-        }
-
-        // />
-        if (!htmlCursor.isRightArrowCharacter())
-        {
-            setError(buildUnexpectedCharacterError());
-            return;
-        }
-
-        fromOphanTag = true;
+    if (htmlCursor.endReached()) {
         return;
     }
 
-    // >
-    if (htmlCursor.isRightArrowCharacter())
+    // End tag reached
+    if (htmlCursor.isSlashCharacter() || htmlCursor.isRightArrowCharacter())
     {
         return;
     }
@@ -119,18 +102,22 @@ std::string AttributeLexer::getAttributeValue()
     if (!isQuote && !htmlCursor.isDoubleQuote())
     {
         setError(buildUnexpectedCharacterError());
-        return;
+        return "";
     }
 
     std::string attributeValue = "";
 
-    while (true) {
-        if (!htmlCursor.advance()) {
+    while (true)
+    {
+        if (!htmlCursor.advance())
+        {
             setError(buildUnexpectedCharacterError());
             return "";
         }
 
-        if (htmlCursor.isQuote() && isQuote || htmlCursor.isDoubleQuote() && !isQuote) {
+        if ((htmlCursor.isQuote() && isQuote) || (htmlCursor.isDoubleQuote() && !isQuote))
+        {
+            htmlCursor.advance();
             return attributeValue;
         }
     }
