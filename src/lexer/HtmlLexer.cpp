@@ -75,3 +75,8 @@ std::string HtmlLexer::getText()
 
     return htmlCursor->getRestContent();
 }
+
+HtmlLexer::~HtmlLexer()
+{
+    delete htmlCursor;
+}

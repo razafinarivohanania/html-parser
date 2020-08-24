@@ -2,6 +2,7 @@
 #define HTML_TOKEN
 
 #include <string>
+#include "../utils/StringUtils.h"
 
 enum TokenType
 {
@@ -25,6 +26,7 @@ public:
     std::string getTypeAsString();
     std::string getValue();
     std::string toString();
+
 private:
     TokenType type;
     std::string value;

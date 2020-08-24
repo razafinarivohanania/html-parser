@@ -1,30 +1,5 @@
 #include "TokenTest.h"
 
-static void emptyTokensAndFreeMemories(std::vector<HtmlToken *> tokens)
-{
-    for (auto &token : tokens)
-    {
-        if (token != nullptr)
-        {
-            delete token;
-        }
-    }
-
-    int size = tokens.size();
-    for (int i = 0; i < size; i++)
-    {
-        tokens.pop_back();
-    }
-}
-
-static void printTokens(std::vector<HtmlToken *> tokens)
-{
-    for (auto &token : tokens)
-    {
-        std::cout << token->toString() << std::endl;
-    }
-}
-
 static bool testToken(HtmlToken *expectedToken, HtmlToken *actualToken, const int index)
 {
     if (expectedToken->getType() != actualToken->getType())
@@ -58,6 +33,14 @@ namespace Test
 {
     namespace Lexer
     {
+        void printTokens(std::vector<HtmlToken *> tokens)
+        {
+            for (auto &token : tokens)
+            {
+                std::cout << token->toString() << std::endl;
+            }
+        }
+
         void testTokens(std::vector<HtmlToken *> expectedTokens,
                         std::vector<HtmlToken *> actualTokens)
         {
@@ -86,6 +69,23 @@ namespace Test
         {
             emptyTokensAndFreeMemories(expectedTokens);
             emptyTokensAndFreeMemories(actualTokens);
+        }
+
+        void emptyTokensAndFreeMemories(std::vector<HtmlToken *> tokens)
+        {
+            for (auto &token : tokens)
+            {
+                if (token != nullptr)
+                {
+                    delete token;
+                }
+            }
+
+            int size = tokens.size();
+            for (int i = 0; i < size; i++)
+            {
+                tokens.pop_back();
+            }
         }
 
         bool testToken(HtmlToken *expectedToken, HtmlToken *actualToken)

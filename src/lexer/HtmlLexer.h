@@ -15,6 +15,7 @@ public:
     HtmlLexer(std::string *html);
     std::vector<HtmlToken *> getTokens();
 
+    ~HtmlLexer();
 private:
     std::vector<HtmlToken *> tokens;
     HtmlCursor *htmlCursor;

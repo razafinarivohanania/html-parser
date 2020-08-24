@@ -6,6 +6,7 @@
 #include "test/lexer/TagLexerTest.h"
 #include "test/lexer/DoctypeLexerTest.h"
 #include "test/lexer/TagLexerTest.h"
+#include "test/lexer/HtmlLexerTest.h"
 
 void testAttributes()
 {
@@ -67,11 +68,16 @@ void testTags()
     Test::Lexer::testEndTag();
 }
 
+void testHtmls() {
+    Test::Lexer::testSimpleHtml();
+}
+
 int main()
 {
-    testTags();
+    /* testTags();
     testComments();
     testDoctypes();
     testAttributes();
-    testTags();
+    testTags();*/
+    testHtmls();
 }

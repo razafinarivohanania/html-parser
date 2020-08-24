@@ -19,7 +19,7 @@ std::string HtmlToken::getValue()
 std::string HtmlToken::toString()
 {
     std::string typeAsString = getTypeAsString();
-    return "HtmlToken { type : " + typeAsString + ", value : " + value + " }";
+    return "HtmlToken { type : " + typeAsString + ", value : " + StringUtils::encodeNewLines(value) + " }";
 }
 
 std::string HtmlToken::getTypeAsString()

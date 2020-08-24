@@ -54,4 +54,24 @@ namespace StringUtils
                character == '\r' ||
                character == '\t';
     }
+
+    std::string encodeNewLines(std::string &text)
+    {
+        std::string encodedNewLines = "";
+        int size = text.size();
+
+        for (int i = 0; i < size; i++)
+        {
+            char character = text[i];
+            if (character == '\n')
+            {
+                encodedNewLines.push_back('\\');
+                encodedNewLines.push_back('n');
+            } else {
+                encodedNewLines.push_back(character);
+            }
+        }
+
+        return encodedNewLines;
+    }
 } // namespace StringUtils
