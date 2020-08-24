@@ -16,6 +16,14 @@ std::string HtmlToken::getValue()
     return value;
 }
 
+void HtmlToken::appendValue(const std::string value)
+{
+    int size = value.size();
+    for (int i = 0; i < size; i++) {
+        this->value.push_back(value[i]);
+    }
+}
+
 std::string HtmlToken::toString()
 {
     std::string typeAsString = getTypeAsString();

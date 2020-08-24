@@ -25,6 +25,7 @@ public:
     TokenType getType();
     std::string getTypeAsString();
     std::string getValue();
+    void appendValue(const std::string value);
     std::string toString();
 
 private:

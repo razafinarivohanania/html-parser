@@ -15,6 +15,7 @@ void HtmlLexer::process()
 {
     if (htmlCursor->endReached())
     {
+        std::cout << "AAAAAAAAAAAAAAAAAA" << std::endl;
         return;
     }
 
@@ -60,20 +61,48 @@ void HtmlLexer::process()
         return;
     }
 
-    tokens.push_back(new HtmlToken(TokenType::TEXT, text));
+    getTextToken(text);
     process();
+}
+
+void HtmlLexer::getTextToken(const std::string &text)
+{
+    if (tokens.size() > 0)
+    {
+        HtmlToken *lastToken = tokens.at(tokens.size() - 1);
+        if (lastToken->getType() == TokenType::TEXT)
+        {
+            lastToken->appendValue(text);
+            return;
+        }
+    }
+
+    tokens.push_back(new HtmlToken(TokenType::TEXT, text));
 }
 
 std::string HtmlLexer::getText()
 {
-    Result text = htmlCursor->getStringBefore("<");
-    if (text.success)
+    Result result = htmlCursor->getStringBefore("<");
+    if (!result.success)
     {
-        htmlCursor->advance();
-        return text.content;
+        std::string restContent = htmlCursor->getRestContent();
+        htmlCursor->skipBlocs(restContent.size());
+        return restContent;
     }
 
-    return htmlCursor->getRestContent();
+    if (!result.content.empty())
+    {
+        htmlCursor->skipBlocs(result.content.size());
+        return result.content;
+    }
+
+    std::string text = "<";
+    if (!htmlCursor->advance())
+    {
+        return text;
+    }
+
+    return text + getText();
 }
 
 HtmlLexer::~HtmlLexer()

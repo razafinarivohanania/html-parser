@@ -22,6 +22,7 @@ private:
 
     void process();
     std::string getText();
+    void getTextToken(const std::string &text);
 };
 
 #endif

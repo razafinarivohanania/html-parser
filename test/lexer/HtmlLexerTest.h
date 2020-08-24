@@ -12,6 +12,7 @@ namespace Test
     namespace Lexer
     {
         void testSimpleHtml();
+        void testComplexHtml();
     }
 } // namespace Test
 

@@ -70,14 +70,15 @@ void testTags()
 
 void testHtmls() {
     Test::Lexer::testSimpleHtml();
+    Test::Lexer::testComplexHtml();
 }
 
 int main()
 {
-    /* testTags();
+    testTags();
     testComments();
     testDoctypes();
     testAttributes();
-    testTags();*/
+    testTags();
     testHtmls();
 }
