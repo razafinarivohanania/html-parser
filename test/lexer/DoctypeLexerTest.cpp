@@ -40,7 +40,7 @@ namespace Test
 
             if (!doctypeLexer.isSuccess())
             {
-                std::cout << "Test success" << std::endl;
+                std::cout << "Test success" << std::endl << std::endl;
                 return;
             }
 
@@ -65,7 +65,7 @@ namespace Test
 
             if (!doctypeLexer.isSuccess())
             {
-                std::cout << "Test success" << std::endl;
+                std::cout << "Test success" << std::endl << std::endl;
                 return;
             }
 

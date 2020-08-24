@@ -65,8 +65,7 @@ namespace Test
             if (expectedSize != actualTokens.size())
             {
                 printTokens(actualTokens);
-                std::cout << "ERROR : Expected tokens size [" << expectedSize << "] but found [" << actualTokens.size() << "]" << std::endl
-                          << std::endl;
+                std::cout << "ERROR : Expected tokens size [" << expectedSize << "] but found [" << actualTokens.size() << "]" << std::endl;
 
                 return;
             }
@@ -79,8 +78,7 @@ namespace Test
                 }
             }
 
-            std::cout << "Test success" << std::endl
-                      << std::endl;
+            std::cout << "Test success" << std::endl;
         };
 
         void emptyTokensAndFreeMemories(std::vector<HtmlToken *> expectedTokens,

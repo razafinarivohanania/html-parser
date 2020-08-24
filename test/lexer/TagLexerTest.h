@@ -10,8 +10,12 @@
 namespace Test {
     namespace Lexer {
         void testBeginTag();
-        void testBeginTagWithAttribute();
+        void testBeginTagWithAttributeWithoutValue();
+        void testBeginTagWithAttributeWithValue();
+
         void testOrphanTag();
+        void testOrphanTagWithAttributeWithValue();
+
         void testEndTag();
     }
 }
