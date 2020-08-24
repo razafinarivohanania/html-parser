@@ -15,7 +15,6 @@ void HtmlLexer::process()
 {
     if (htmlCursor->endReached())
     {
-        std::cout << "AAAAAAAAAAAAAAAAAA" << std::endl;
         return;
     }
 
