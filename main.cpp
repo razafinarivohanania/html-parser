@@ -51,9 +51,18 @@ void testTags()
     Test::Lexer::testBeginTag();
     Test::Lexer::testBeginTagWithAttributeWithoutValue();
     Test::Lexer::testBeginTagWithAttributeWithValue();
+    Test::Lexer::testBeginTagWithTwoAttributesWithoutValues();
+    Test::Lexer::testBeginTagWithTwoAttributesWithValues();
+    Test::Lexer::testBeginTagWithAttributeWithoutValueAndAttributeWithValue();
+    Test::Lexer::testBeginTagWithAttributeWithValueAndAttributeWithoutValue();
 
     Test::Lexer::testOrphanTag();
+    Test::Lexer::testOrphanTagWithAttributeWithoutValue();
     Test::Lexer::testOrphanTagWithAttributeWithValue();
+    Test::Lexer::testOrphanTagWithTwoAttributesWithoutValues();
+    Test::Lexer::testOrphanTagWithTwoAttributesWithValues();
+    Test::Lexer::testOrphanTagWithAttributeWithoutValueAndAttributeWithValue();
+    Test::Lexer::testOrphanTagWithAttributeWithValueAndAttributeWithoutValue();
 
     Test::Lexer::testEndTag();
 }
