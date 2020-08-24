@@ -15,7 +15,7 @@ namespace Test
     {
         void testSimpleHtml()
         {
-            testHtml("test/resources/complexe-html.html");
+            testHtml("test/resources/sample-html.html");
         }
 
         void testComplexHtml()
