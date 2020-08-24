@@ -38,6 +38,8 @@ void HtmlLexer::process()
         return;
     }
 
+    htmlCursor->setPosition(doctypeLexer.getInitialPosition());
+
     TagLexer tagLexer(htmlCursor);
     if (tagLexer.isSuccess())
     {
@@ -49,6 +51,8 @@ void HtmlLexer::process()
         process();
         return;
     }
+
+    htmlCursor->setPosition(tagLexer.getInitialPosition());
 
     std::string text = getText();
     if (text.empty())

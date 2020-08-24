@@ -16,6 +16,7 @@ public:
 
     int getHtmlSize();
     int getPosition();
+    void setPosition(int position);
     int getLine();
     int getColumn();
 

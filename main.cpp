@@ -50,7 +50,6 @@ void testTags()
 {
     Test::Lexer::testBeginTag();
     Test::Lexer::testBeginTagWithAttribute();
-
     Test::Lexer::testOrphanTag();
     Test::Lexer::testEndTag();
 }

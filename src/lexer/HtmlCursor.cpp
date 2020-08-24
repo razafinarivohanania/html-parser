@@ -19,6 +19,11 @@ int HtmlCursor::getPosition()
     return position;
 }
 
+void HtmlCursor::setPosition(int position)
+{
+    this->position = position;
+}
+
 int HtmlCursor::getHtmlSize()
 {
     return htmlSize;
@@ -290,10 +295,12 @@ bool HtmlCursor::advance()
     return true;
 }
 
-std::string HtmlCursor::getRestContent() {
+std::string HtmlCursor::getRestContent()
+{
     std::string restContent = "";
 
-    for (int i = position; i < htmlSize; i++){
+    for (int i = position; i < htmlSize; i++)
+    {
         restContent.push_back((*html)[i]);
     }
 
